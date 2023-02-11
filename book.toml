@@ -1,0 +1,19 @@
+[book]
+authors = ["Alan Smith"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Rust Notes"
+
+[build]
+build-dir = "site"
+
+[output.html.playground]
+editable = true
+line-numbers = true
+
+[output.html.search]
+enable = false
+
+[output.html.print]
+enable = true 

@@ -15,3 +15,9 @@ with "Hello World"
 
 <div id="source" />
 
+
+```rust, editable
+fn main() {
+println!("Hello, World");
+}
+```

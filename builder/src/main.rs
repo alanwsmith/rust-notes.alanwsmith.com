@@ -14,11 +14,30 @@ use nom::IResult;
 // use nom::bytes::complete::take;
 use nom::character::complete::multispace0;
 use nom::character::complete::multispace1;
+use nom::combinator::eof;
 use nom::combinator::map_parser;
+use nom::combinator::rest;
 use nom::sequence::separated_pair;
 use nom::sequence::tuple;
 
 use std::fs;
+
+use serde::{Deserialize, Serialize};
+use serde_json::Result;
+use serde_json::Value;
+
+#[derive(Serialize, Deserialize)]
+struct LineSet {
+    lines: Vec<i32>,
+    highlights: Vec<i32>,
+    heading: String,
+    note: String,
+}
+
+#[derive(Serialize, Deserialize)]
+struct Example {
+    set: Vec<LineSet>,
+}
 
 fn main() {
     let mut contents = String::from("");
@@ -44,7 +63,14 @@ fn main() {
     contents.push_str("\n");
     contents.push_str("```");
 
-    output_file(&contents);
+    // Get the JSON
+    let (input, json_data) = get_json(input).unwrap();
+    let input = make_json(json_data).unwrap();
+    println!("{:?}", input);
+    // let e: Example = serde_json::from_str(json_data).unwrap();
+
+    // Output the file
+    // output_file(&contents);
 }
 
 fn get_content(input: &str) -> IResult<&str, &str> {
@@ -54,14 +80,35 @@ fn get_content(input: &str) -> IResult<&str, &str> {
     Ok((input, data))
 }
 
+fn make_json(input: &str) -> Result<Value> {
+    // let data = r#"
+    //     {
+    //         "name": "John Doe",
+    //         "age": 43,
+    //         "phones": [
+    //             "+44 1234567",
+    //             "+44 2345678"
+    //         ]
+    //     }"#;
+
+    println!("{}", input);
+
+    let v: Value = serde_json::from_str(input)?;
+
+    Ok(v)
+}
+
+fn get_json(input: &str) -> IResult<&str, &str> {
+    let (input, data) = tag("---> JSON")(input)?;
+    let (input, data) = rest(input)?;
+    Ok((input, data))
+}
+
 fn get_source(input: &str) -> IResult<&str, &str> {
     let (input, newline) = multispace0(input)?;
     let (input, header) = tag("---> SOURCE")(input)?;
     let (input, data) = multispace0(input)?;
     let (input, data) = take_until("--->")(input)?;
-
-    // let (input, stuff) = preceded(space1, alpha1)(input)?;
-    // let (input, data) = take_until("--->")(input)?;
     Ok((input, data))
 }
 

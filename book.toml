@@ -8,12 +8,16 @@ title = "Rust Notes"
 [build]
 build-dir = "site"
 
+[output.html]
+additional-js = [ "theme/fader.js"]
+
 [output.html.playground]
 editable = true
+copyable = false 
 line-numbers = true
 
 [output.html.search]
 enable = false
 
 [output.html.print]
-enable = true 
+enable = true

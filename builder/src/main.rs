@@ -12,11 +12,17 @@ use nom::IResult;
 use std::fs;
 
 #[derive(Debug)]
+struct Example {
+    raw_text: String,
+}
+
+#[derive(Debug)]
 struct Page {
     title: Option<String>,
     content: Option<String>,
     source: Option<String>,
     raw_text: String,
+    examples: Vec<Example>,
 }
 
 fn main() {
@@ -25,6 +31,7 @@ fn main() {
         title: None,
         content: None,
         source: None,
+        examples: vec![],
     };
 
     match get_title(&mut page) {
@@ -42,21 +49,26 @@ fn main() {
         Err(_) => println!("It borked"),
     }
 
-    match get_lines(&mut page) {
+    match get_examples(&mut page) {
         Ok(_) => println!("It worked"),
         Err(_) => println!("It borked"),
     }
 
-    dbg!(page.source);
+    dbg!(page);
 }
 
-fn get_lines(page: &mut Page) -> IResult<&str, &str> {
-    let (input, _) = take_until("---> LINES")(page.raw_text.as_str())?;
-    let (input, mut lines) = separated_list1(tag("---> LINES"), take_until("---> LINES"))(input)?;
+fn get_examples(page: &mut Page) -> IResult<&str, &str> {
+    let (input, _) = take_until("---> EXAMPLE")(page.raw_text.as_str())?;
+    let (input, mut lines) =
+        separated_list1(tag("---> EXAMPLE"), take_until("---> EXAMPLE"))(input)?;
     let (_, tmp_line) = rest(input)?;
-    let (_, mut line) = preceded(tag("---> LINES"), rest)(input)?;
+    let (_, mut line) = preceded(tag("---> EXAMPLE"), rest)(input)?;
     lines.push(line);
-    dbg!(lines);
+    for line in lines.iter() {
+        &page.examples.push(Example {
+            raw_text: line.trim().to_string(),
+        });
+    }
     Ok(("", ""))
 }
 

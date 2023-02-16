@@ -1,29 +1,73 @@
 #![allow(warnings)]
 
+use nom::bytes::complete::tag;
+use nom::bytes::complete::take_until;
+use nom::character::complete::multispace0;
+use nom::character::complete::multispace1;
+use nom::character::complete::not_line_ending;
 use nom::IResult;
 use std::fs;
 
 #[derive(Debug)]
 struct Page {
+    title: Option<String>,
+    content: Option<String>,
     raw_text: String,
 }
 
 fn main() {
     let mut page = Page {
         raw_text: fs::read_to_string("content/index.mdx").unwrap(),
+        title: None,
+        content: None,
     };
 
-    // get_title(&mut page);
-    dbg!(&page);
+    match get_title(&mut page) {
+        Ok(_) => println!("It worked"),
+        Err(_) => println!("It borker"),
+    }
+
+    match get_content(&mut page) {
+        Ok(_) => println!("It worked"),
+        Err(_) => println!("It borker"),
+    }
+
+    dbg!(page.content);
 }
 
-// fn get_title(page: &mut Page) -> IResult<&str, &str> {}
+fn get_content(page: &mut Page) -> IResult<&str, &str> {
+    let (input, _) = take_until("---> CONTENT")(page.raw_text.as_str())?;
+    let (input, _) = tag("---> CONTENT")(input)?;
+    let (input, _) = multispace0(input)?;
+    let (input, content) = take_until("--->")(input)?;
+    page.content = Some(content.to_string());
+    Ok(("", ""))
+}
+
+fn get_title(page: &mut Page) -> IResult<&str, &str> {
+    let (input, _) = tag("---> TITLE")(page.raw_text.as_str())?;
+    let (input, _) = multispace1(input)?;
+    let (_input, title) = not_line_ending(input)?;
+    page.title = Some(title.to_string());
+
+    // dbg!(title);
+    // let (input, lines) = separated_list1(tag("---> "), take_until("---> "))(input)?;
+    // // dbg!(lines[0]);
+    // let (input, _) = tag("TITLE")(lines[0])?;
+    // let (input, _) = multispace1(input)?;
+    // let (input, title) = not_line_ending(input)?;
+    // // dbg!(input);
+    // // page.title = Some(String::from("placeholder"));
+    // page.title = Some(title.to_string());
+    // dbg!(&page);
+
+    Ok(("", ""))
+}
 
 // use nom::bytes::complete::tag;
 // use nom::bytes::complete::take_until;
 // use nom::character::complete::alpha1;
 // use nom::character::complete::line_ending;
-// use nom::character::complete::not_line_ending;
 // use nom::character::complete::space0;
 // use nom::character::complete::space1;
 // use nom::sequence::preceded;

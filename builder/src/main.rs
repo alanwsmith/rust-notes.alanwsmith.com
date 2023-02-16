@@ -12,6 +12,7 @@ use std::fs;
 struct Page {
     title: Option<String>,
     content: Option<String>,
+    source: Option<String>,
     raw_text: String,
 }
 
@@ -20,6 +21,7 @@ fn main() {
         raw_text: fs::read_to_string("content/index.mdx").unwrap(),
         title: None,
         content: None,
+        source: None,
     };
 
     match get_title(&mut page) {
@@ -32,7 +34,12 @@ fn main() {
         Err(_) => println!("It borker"),
     }
 
-    dbg!(page.content);
+    match get_source(&mut page) {
+        Ok(_) => println!("It worked"),
+        Err(_) => println!("It borker"),
+    }
+
+    dbg!(page.source);
 }
 
 fn get_content(page: &mut Page) -> IResult<&str, &str> {
@@ -40,7 +47,16 @@ fn get_content(page: &mut Page) -> IResult<&str, &str> {
     let (input, _) = tag("---> CONTENT")(input)?;
     let (input, _) = multispace0(input)?;
     let (input, content) = take_until("--->")(input)?;
-    page.content = Some(content.to_string());
+    page.content = Some(content.trim().to_string());
+    Ok(("", ""))
+}
+
+fn get_source(page: &mut Page) -> IResult<&str, &str> {
+    let (input, _) = take_until("---> SOURCE")(page.raw_text.as_str())?;
+    let (input, _) = tag("---> SOURCE")(input)?;
+    let (input, _) = multispace0(input)?;
+    let (input, source) = take_until("--->")(input)?;
+    page.source = Some(source.trim().to_string());
     Ok(("", ""))
 }
 
@@ -49,18 +65,6 @@ fn get_title(page: &mut Page) -> IResult<&str, &str> {
     let (input, _) = multispace1(input)?;
     let (_input, title) = not_line_ending(input)?;
     page.title = Some(title.to_string());
-
-    // dbg!(title);
-    // let (input, lines) = separated_list1(tag("---> "), take_until("---> "))(input)?;
-    // // dbg!(lines[0]);
-    // let (input, _) = tag("TITLE")(lines[0])?;
-    // let (input, _) = multispace1(input)?;
-    // let (input, title) = not_line_ending(input)?;
-    // // dbg!(input);
-    // // page.title = Some(String::from("placeholder"));
-    // page.title = Some(title.to_string());
-    // dbg!(&page);
-
     Ok(("", ""))
 }
 

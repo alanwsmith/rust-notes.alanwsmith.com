@@ -17,6 +17,10 @@ with "Hello World"
 
 <div id="source" />
 
+This is a test note for putting content 
+after the source blocks
+
+
 ---> SOURCE
 
 fn main() {
@@ -25,39 +29,42 @@ fn main() {
 
 ---> LINES
 
-lines: 1, 2, 3
-highlights: 1, 2, 3
-heading: Full Source Code
-note:
+details:
+
+{
+  "heading": "Full Source Code", 
+  "visible": [1, 2, 3],
+  "active": [1, 2, 3],
+  "fades": [],
+  "overrides": [],
+}
+
+note: 
+
+This is the full source code for 
+`Hello, World`.
+
+The examples on the site start with the 
+full source code then go through it 
+step by step to show how it works.
 
 
 ---> LINES
 
-
+details:
 
 {
-  "sets": [
-    {
-      "lines": [1, 2, 3],
-      "highlights": [1, 2, 3]
-      "heading": "Full Source Code"
-      "note": `This is the full source code for "Hello, World". 
-      
-      The examples on the site start with the full source code then 
-      go through it step by step to show how it works.`
-    },
-
-    {
-      "lines": [1, 3],
-      "highlights": [1, 3],
-      "headings": "Create `main`",
-      "note": `Every example on this site is a full Rust program.
-
-    Each one starts with a `main` function
-    which is where Rust first looks when it starts
-    things up.`
-
-    }
-  ]
+  "heading": "The `main` function", 
+  "visible": [1,  3],
+  "active": [1,  3],
+  "fades": [],
+  "overrides": [],
 }
+
+note: 
+
+Each program starts with a `main` function
+which is where Rust first looks when it starts
+things up.
+
 

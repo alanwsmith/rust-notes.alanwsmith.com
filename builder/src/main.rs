@@ -5,6 +5,9 @@ use nom::bytes::complete::take_until;
 use nom::character::complete::multispace0;
 use nom::character::complete::multispace1;
 use nom::character::complete::not_line_ending;
+use nom::combinator::rest;
+use nom::multi::separated_list1;
+use nom::sequence::preceded;
 use nom::IResult;
 use std::fs;
 
@@ -26,20 +29,35 @@ fn main() {
 
     match get_title(&mut page) {
         Ok(_) => println!("It worked"),
-        Err(_) => println!("It borker"),
+        Err(_) => println!("It borked"),
     }
 
     match get_content(&mut page) {
         Ok(_) => println!("It worked"),
-        Err(_) => println!("It borker"),
+        Err(_) => println!("It borked"),
     }
 
     match get_source(&mut page) {
         Ok(_) => println!("It worked"),
-        Err(_) => println!("It borker"),
+        Err(_) => println!("It borked"),
+    }
+
+    match get_lines(&mut page) {
+        Ok(_) => println!("It worked"),
+        Err(_) => println!("It borked"),
     }
 
     dbg!(page.source);
+}
+
+fn get_lines(page: &mut Page) -> IResult<&str, &str> {
+    let (input, _) = take_until("---> LINES")(page.raw_text.as_str())?;
+    let (input, mut lines) = separated_list1(tag("---> LINES"), take_until("---> LINES"))(input)?;
+    let (_, tmp_line) = rest(input)?;
+    let (_, mut line) = preceded(tag("---> LINES"), rest)(input)?;
+    lines.push(line);
+    dbg!(lines);
+    Ok(("", ""))
 }
 
 fn get_content(page: &mut Page) -> IResult<&str, &str> {
@@ -67,22 +85,6 @@ fn get_title(page: &mut Page) -> IResult<&str, &str> {
     page.title = Some(title.to_string());
     Ok(("", ""))
 }
-
-// use nom::bytes::complete::tag;
-// use nom::bytes::complete::take_until;
-// use nom::character::complete::alpha1;
-// use nom::character::complete::line_ending;
-// use nom::character::complete::space0;
-// use nom::character::complete::space1;
-// use nom::sequence::preceded;
-// // use nom::bytes::complete::take;
-// use nom::character::complete::multispace0;
-// use nom::character::complete::multispace1;
-// use nom::combinator::eof;
-// use nom::combinator::map_parser;
-// use nom::combinator::rest;
-// use nom::sequence::separated_pair;
-// use nom::sequence::tuple;
 
 // use serde::{Deserialize, Serialize};
 // use serde_json::Result;

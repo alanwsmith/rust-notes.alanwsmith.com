@@ -9,14 +9,29 @@ use nom::combinator::rest;
 use nom::multi::separated_list1;
 use nom::sequence::preceded;
 use nom::IResult;
+use serde::{Deserialize, Serialize};
+use serde_json::json;
+use serde_json::Result;
+use serde_json::Value;
 use std::fs;
 
-#[derive(Debug)]
-struct Example {
-    raw_text: String,
+#[derive(Debug, Serialize, Deserialize)]
+struct LineSet {
+    heading: String,
+    visible: Vec<i32>,
+    active: Vec<i32>,
+    fades: Vec<i32>,
+    overrides: Vec<i32>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
+struct Example {
+    raw_text: String,
+    raw_json: Option<String>,
+    line_set: Option<serde_json::Value>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
 struct Page {
     title: Option<String>,
     content: Option<String>,
@@ -49,28 +64,137 @@ fn main() {
         Err(_) => println!("It borked"),
     }
 
-    match get_examples(&mut page) {
-        Ok(_) => println!("It worked"),
-        Err(_) => println!("It borked"),
-    }
-
     dbg!(page);
+
+    // match get_examples(&mut page) {
+    //     Ok(_) => println!("It worked"),
+    //     Err(_) => println!("It borked"),
+    // }
+
+    // match get_raw_jsons(&mut page) {
+    //     Ok(_) => println!("It worked"),
+    //     Err(_) => println!("It borked"),
+    // }
+
+    // get_line_set(&mut page);
+
+    // match get_line_set(&mut page) {
+    //     Ok(_) => println!("It worked"),
+    //     Err(e) => println!("{:?}", e),
+    // }
+
+    // dbg!(page);
 }
 
-fn get_examples(page: &mut Page) -> IResult<&str, &str> {
-    let (input, _) = take_until("---> EXAMPLE")(page.raw_text.as_str())?;
-    let (input, mut lines) =
-        separated_list1(tag("---> EXAMPLE"), take_until("---> EXAMPLE"))(input)?;
-    let (_, tmp_line) = rest(input)?;
-    let (_, mut line) = preceded(tag("---> EXAMPLE"), rest)(input)?;
-    lines.push(line);
-    for line in lines.iter() {
-        &page.examples.push(Example {
-            raw_text: line.trim().to_string(),
-        });
+// fn get_raw_jsons(page: &mut Page) -> IResult<&str, &str> {
+//     for example in page.examples.iter_mut() {
+//         let (input, _) = tag("details:")(example.raw_text.as_str())?;
+//         let (input, raw_json) = take_until("note:")(input)?;
+//         // dbg!(raw_json.to_string());
+//         example.raw_json = Some(raw_json.trim().to_string());
+//         // example.line_set = serde_json::from_str(raw_json)?;
+//     }
+//     Ok(("", ""))
+// }
+
+fn get_line_set(page: &mut Page) -> Result<&str> {
+    for example in page.examples.iter_mut() {
+        // This works
+        example.line_set = serde_json::from_str("{\"a\":\"b\"}").unwrap();
+        //dbg!(&example.line_set.as_ref().unwrap());
+
+        //
+        example.line_set = serde_json::from_str("{\"a\":\"b\"}").unwrap();
+        //dbg!(&example.line_set.as_ref().unwrap());
+
+        // dbg!(&example.raw_json.as_ref().unwrap());
+        //
+        // //////////////////////////////////////////////
+        // Things that don't work
+        // serde_json::from_str(&example.raw_json.as_ref().unwrap())?;
+        // serde_json::from_str(&example.raw_json.unwrap_or("{}".to_string()));
+
+        ////////////////////////////////////////
+        // This doesn't work. It loads the data, but it's a String
+        // dbg!(json!(&example.raw_json.as_ref().unwrap()));
+        // example.line_set = Some((json!(&example.raw_json.as_ref().unwrap())));
+        // dbg!(&example.line_set.as_ref()["heading"]);
+
+        ///////////////////////////////////////////////////
+        //// This fails
+        //dbg!(&example.raw_json);
+        //let v: Value = serde_json::from_str(&example.raw_json.as_ref().unwrap().as_str())?;
+        //dbg!(v);
+
+        ///////////////////////////////////////////////////
+        //// This works now that the data is cleaned up
+        //// dbg!(&example.raw_json);
+        //let v: Value = serde_json::from_str(&example.raw_json.as_ref().unwrap().as_str()).unwrap();
+        //dbg!(v);
+
+        /////////////////////////////////////////////////////
+        //// This works with less whatever
+        //let v: Value = serde_json::from_str(&example.raw_json.as_ref().unwrap())?;
+        //dbg!(v);
+
+        ///////////////////////////////////////////////////
+        // This works with less whatever
+        example.line_set = serde_json::from_str(&example.raw_json.as_ref().unwrap())?;
+        dbg!(&example.line_set.as_ref().unwrap()["heading"]
+            .as_str()
+            .unwrap());
+
+        println!(
+            "{}",
+            &example.line_set.as_ref().unwrap()["heading"]
+                .as_str()
+                .unwrap()
+        );
+
+        ///////////////////////////////////////////////
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        // dbg!(serde_json::from_str(&example.raw_json.as_ref().unwrap())?);
+
+        // example.line_set = Some(serde_json::from_str(example.raw_json.unwrap())?).ok_or("asdf")?;
+        // let v: Value = example.raw_json.unwrap().into();
+        // dbg!(example.raw_json.as_ref().unwrap());
+        // dbg!(serde_json::from_str(&example.raw_json.unwrap().as_str()));
+        //dbg!(serde_json::from_str(
+        //   example.raw_json.as_ref().unwrap().as_str()
+        // )?);
+        //example.line_set = Some(serde_json::from_str(example.raw_json.as_ref().unwrap())?);
+        // dbg!(serde_json::from_str(Some(&example.raw_json).unwrap()));
+        // dbg!(serde_json::from_str(example.raw_json).unwrap().to_str());
+        // example.line_set = serde_json::from_str(example.raw_json))?;
     }
-    Ok(("", ""))
+    // dbg!(page);
+    Ok("")
 }
+
+// fn get_examples(page: &mut Page) -> IResult<&str, &str> {
+//     let (input, _) = take_until("---> EXAMPLE")(page.raw_text.as_str())?;
+//     let (input, _) = tag("---> EXAMPLE")(input)?;
+//     let (input, mut lines) =
+//         separated_list1(tag("---> EXAMPLE"), take_until("---> EXAMPLE"))(input)?;
+//     let (_, tmp_line) = rest(input)?;
+//     let (_, mut line) = preceded(tag("---> EXAMPLE"), rest)(input)?;
+//     lines.push(line);
+//     for line in lines.iter() {
+//         let mut example = Example {
+//             raw_text: line.trim().to_string(),
+//             raw_json: None,
+//             line_set: None,
+//         };
+//         page.examples.push(example);
+//     }
+//     Ok(("", ""))
+// }
 
 fn get_content(page: &mut Page) -> IResult<&str, &str> {
     let (input, _) = take_until("---> CONTENT")(page.raw_text.as_str())?;

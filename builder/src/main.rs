@@ -68,7 +68,7 @@ fn main() {
     build_output(&mut page);
     write_output(&page.output);
 
-    dbg!(&page);
+    // dbg!(&page);
 }
 
 fn write_output(text: &String) -> std::io::Result<()> {
@@ -86,6 +86,11 @@ fn build_output(page: &mut Page) {
     page.output
         .push_str(page.content.as_ref().unwrap().as_str());
     page.output.push_str("\n\n");
+
+    // Pull the source code into a Vec.
+    let raw_lines: Vec<&str> = page.source.as_ref().unwrap().split("\n").collect();
+    dbg!(&raw_lines);
+
     for example in page.examples.iter() {
         page.output.push_str("### ");
         page.output.push_str(
@@ -102,7 +107,31 @@ fn build_output(page: &mut Page) {
 
         page.output.push_str("```rust\n");
 
-        page.output.push_str(page.source.as_ref().unwrap().as_str());
+        // Make a vec to hold the local source code lines
+        let mut local_lines = vec![""];
+        local_lines.resize(raw_lines.len(), "");
+
+        local_lines[0] = "asdf";
+
+        page.output.push_str(&local_lines.join("\n"));
+
+        // for source_line in &local_lines {
+        //     page.output.push_str(source_line);
+        //     page.output.push_str("asdf");
+        //     // dbg!(source_line);
+        // }
+
+        //let source_lines = page.source.as_ref().unwrap().split("\n");
+        // dbg!(source_lines);
+
+        // for source_line in page.source.as_ref().unwrap().split("\n") {
+        //     page.output.push_str(source_line);
+        //     // dbg!(source_line);
+        // }
+
+        //page.output.push_str(source_lines[1]);
+
+        // page.output.push_str(page.source.as_ref().unwrap().as_str());
 
         page.output.push_str("\n```\n\n");
 

@@ -91,6 +91,8 @@ fn build_output(page: &mut Page) {
     let raw_lines: Vec<&str> = page.source.as_ref().unwrap().split("\n").collect();
 
     for example in page.examples.iter() {
+        //dbg!(example);
+
         page.output.push_str("### ");
         page.output.push_str(
             example
@@ -122,10 +124,27 @@ fn build_output(page: &mut Page) {
             local_lines[active_index] = raw_lines[active_index];
         }
 
+        for override_value in example
+            .data
+            .as_ref()
+            .unwrap()
+            .get("overrides")
+            .unwrap()
+            .as_sequence()
+            .unwrap()
+        {
+            let override_index = override_value["line"].as_u64().unwrap() as usize - 1;
+            let override_text = override_value["text"].as_str().unwrap();
+            local_lines[override_index] = override_text;
+            dbg!(override_index);
+            dbg!(override_text);
+
+            //dbg!(&override_value["line"]);
+        }
+
+        // output the local lines
         page.output.push_str(&local_lines.join("\n"));
-
         page.output.push_str("\n```\n\n");
-
         page.output.push_str(
             example
                 .data

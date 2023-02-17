@@ -19,7 +19,7 @@ after the source blocks
 ### Full Source Code
 ```rust, editable
 fn main() {
-  println!("Hello, World");
+the quick brown fox
 }
 ```
 

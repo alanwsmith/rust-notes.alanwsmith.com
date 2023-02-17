@@ -66,12 +66,12 @@ fn main() {
     }
 
     build_output(&mut page);
-    write_output(page.output);
+    write_output(&page.output);
 
-    // dbg!(&page.output);
+    dbg!(&page);
 }
 
-fn write_output(text: String) -> std::io::Result<()> {
+fn write_output(text: &String) -> std::io::Result<()> {
     fs::write(
         "/Users/alan/workshop/rust-notes.alanwsmith.com/src/index.md",
         text,

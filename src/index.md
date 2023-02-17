@@ -17,7 +17,7 @@ This is a test note for putting content
 after the source blocks
 
 ### Full Source Code
-```rust
+```rust, editable
 fn main() {
   println!("Hello, World");
 }
@@ -31,7 +31,7 @@ full source code then go through it
 step by step to show how it works.
 
 ### Add the `main` function
-```rust
+```rust, editable
 fn main() {
 
 }

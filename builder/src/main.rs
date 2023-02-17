@@ -89,7 +89,6 @@ fn build_output(page: &mut Page) {
 
     // Pull the source code into a Vec.
     let raw_lines: Vec<&str> = page.source.as_ref().unwrap().split("\n").collect();
-    // dbg!(&raw_lines);
 
     for example in page.examples.iter() {
         page.output.push_str("### ");
@@ -104,13 +103,11 @@ fn build_output(page: &mut Page) {
                 .unwrap(),
         );
         page.output.push_str("\n");
-        page.output.push_str("```rust\n");
+        page.output.push_str("```rust, editable\n");
 
         // Make a vec to hold the local source code lines
         let mut local_lines = vec![""];
         local_lines.resize(raw_lines.len(), "");
-
-        // dbg!(&example.data.as_ref().unwrap().get("visible").unwrap());
 
         for visible_line_number in example
             .data
@@ -123,35 +120,9 @@ fn build_output(page: &mut Page) {
         {
             let active_index = visible_line_number.as_u64().unwrap() as usize - 1;
             local_lines[active_index] = raw_lines[active_index];
-
-            // dbg!(&active_index);
-
-            // dbg!(visible_line_number);
-            // dbg!(&raw_lines[visible_line_number.as_u64().unwrap() as usize - 1]);
-            // dbg!(&raw_lines);
-            // dbg!(&raw_lines[0]);
         }
 
         page.output.push_str(&local_lines.join("\n"));
-
-        // for source_line in &local_lines {
-        //     page.output.push_str(source_line);
-        //     page.output.push_str("\n");
-        //     // page.output.push_str("asdf");
-        //     // dbg!(source_line);
-        // }
-
-        //let source_lines = page.source.as_ref().unwrap().split("\n");
-        // dbg!(source_lines);
-
-        // for source_line in page.source.as_ref().unwrap().split("\n") {
-        //     page.output.push_str(source_line);
-        //     // dbg!(source_line);
-        // }
-
-        //page.output.push_str(source_lines[1]);
-
-        // page.output.push_str(page.source.as_ref().unwrap().as_str());
 
         page.output.push_str("\n```\n\n");
 

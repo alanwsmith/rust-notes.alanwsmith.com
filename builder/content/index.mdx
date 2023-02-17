@@ -31,15 +31,13 @@ heading: Full Source Code
 
 visible: [1, 2, 3]
 
-fadeLines: [2,3]
+fadeLines: [1]
 
 fadeWords:
-  - line: 3
-    word: 1
-
-overrides:
   - line: 2
-    text: "  the quick brown fox"
+    words: [1, 2, 3]
+
+overrides: []
 
 note: | 
   This is the full source code for 
@@ -53,10 +51,17 @@ note: |
 ---> EXAMPLE 
 
 heading: Add the `main` function 
+
 visible: [1,  3]
+
 fadeLines: [1]
+
 fadeWords: []
-overrides: []
+
+overrides:
+  - line: 2
+    text: "  the quick brown fox"
+
 note: |
   Each program starts with a `main` function
   which is where Rust first looks when it starts

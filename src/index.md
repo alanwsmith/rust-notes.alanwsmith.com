@@ -17,7 +17,7 @@ after the source blocks
 ### Full Source Code
 ```rust, editable
 fn main() {
-  the quick brown fox
+  println!("Hello, World");
 }
 ```
 
@@ -31,7 +31,7 @@ step by step to show how it works.
 ### Add the `main` function
 ```rust, editable
 fn main() {
-
+  the quick brown fox
 }
 ```
 
@@ -39,4 +39,4 @@ Each program starts with a `main` function
 which is where Rust first looks when it starts
 things up.
 
- <script>const c = { sets: [ { fadeWords: [{line: 3,word: 1},],fadeLines: [2,3,]},{ fadeWords: [],fadeLines: [1,]},] }; </script>
+ <script>const c = { sets: [ { fadeWords: [{line: 2,words: [1, 2, 3, ]},],fadeLines: [1,]},{ fadeWords: [],fadeLines: [1,]},] }; </script>

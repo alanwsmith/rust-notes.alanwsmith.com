@@ -36,6 +36,15 @@ const prepLineFades = () => {
   })
 }
 
+const prepWordFades = () => {
+  c.sets.forEach((faderSet, faderSetIndex) => {
+    faderSet.fadeWords.forEach((fadeWord) => {
+      console.log(fadeWord.line)
+      console.log(fadeWord.word)
+    })
+  })
+}
+
 const getPlaygrounds = () => {
   c.playgrounds = document.querySelectorAll('pre.playground')
 }
@@ -65,6 +74,7 @@ const faderInit = () => {
     addClasses()
     getPlaygrounds()
     prepLineFades()
+    prepWordFades()
     updateStyles()
     console.log(c)
   }

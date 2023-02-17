@@ -184,9 +184,16 @@ fn build_output(page: &mut Page) {
                 .push_str(&fades.get("line").unwrap().as_u64().unwrap().to_string());
             //
             page.output.push_str(",");
-            page.output.push_str("word: ");
-            page.output
-                .push_str(&fades.get("word").unwrap().as_u64().unwrap().to_string());
+            page.output.push_str("words: [");
+            //
+            for word in fades.get("words").unwrap().as_sequence().unwrap() {
+                // dbg!(word.as_u64().unwrap().as_str());
+                page.output.push_str(&word.as_u64().unwrap().to_string());
+                page.output.push_str(", ");
+            }
+
+            // page.output
+            //     .push_str(&fades.get("words").unwrap().as_u64().unwrap().to_string());
 
             ////
             //page.output.push_str(",");
@@ -194,7 +201,7 @@ fn build_output(page: &mut Page) {
             //page.output
             //    .push_str(&fades.get("end").unwrap().as_u64().unwrap().to_string());
 
-            page.output.push_str("},");
+            page.output.push_str("]},");
         }
         page.output.push_str("],");
 

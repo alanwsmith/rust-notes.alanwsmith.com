@@ -15,8 +15,6 @@ a full set of source code then show how to
 put it together step-by-step. Here's an example
 with "Hello World"
 
-<div id="source" />
-
 This is a test note for putting content 
 after the source blocks
 
@@ -32,7 +30,10 @@ fn main() {
 heading: Full Source Code
 visible: [1, 2, 3]
 active: [1, 2, 3]
-fades: []
+fades:
+  - line: 2
+    start: 1
+    end: 7
 
 overrides:
   - line: 2

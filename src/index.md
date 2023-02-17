@@ -11,8 +11,6 @@ a full set of source code then show how to
 put it together step-by-step. Here's an example
 with "Hello World"
 
-<div id="source" />
-
 This is a test note for putting content 
 after the source blocks
 
@@ -41,3 +39,4 @@ Each program starts with a `main` function
 which is where Rust first looks when it starts
 things up.
 
+ <script>const s = { sets: [ { fades: [{ line: 2},]},{ fades: []},] }; console.log("bravo"); </script>

@@ -136,8 +136,8 @@ fn build_output(page: &mut Page) {
             let override_index = override_value["line"].as_u64().unwrap() as usize - 1;
             let override_text = override_value["text"].as_str().unwrap();
             local_lines[override_index] = override_text;
-            dbg!(override_index);
-            dbg!(override_text);
+            // dbg!(override_index);
+            // dbg!(override_text);
         }
 
         // output the local lines
@@ -156,6 +156,35 @@ fn build_output(page: &mut Page) {
 
         page.output.push_str("\n\n");
     }
+    page.output.push_str(r#" <script>const s = { sets: [ "#);
+
+    for example in page.examples.iter() {
+        page.output.push_str("{ fades: [");
+
+        for fades in example
+            .data
+            .as_ref()
+            .unwrap()
+            .get("fades")
+            .unwrap()
+            .as_sequence()
+            .unwrap()
+        {
+            dbg!(fades.get("line").unwrap().as_u64().unwrap());
+            page.output.push_str("{ line: ");
+            page.output
+                .push_str(&fades.get("line").unwrap().as_u64().unwrap().to_string());
+            // page.output.push_str("1");
+            // page.output
+            //  .push_str(fades.get("line").unwrap().as_str().unwrap());
+            page.output.push_str("},");
+        }
+
+        page.output.push_str("]},");
+    }
+
+    page.output
+        .push_str(r#"] }; console.log("bravo"); </script>"#);
 }
 
 fn get_yaml(page: &mut Page) -> AResult<()> {

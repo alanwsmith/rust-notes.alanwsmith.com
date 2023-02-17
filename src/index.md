@@ -11,7 +11,7 @@ a full set of source code then show how to
 put it together step-by-step. Here's an example
 with "Hello World"
 
-<div class="example">
+<div class="full_source">
 
 ### Full Source Code
 
@@ -21,11 +21,11 @@ fn main() {
 }
 ```
 
-
+<div class="note"></div>
 
 </div>
 
-<div class="example">
+<h2>Step By Step</h2><div class="example">
 
 ### Add the `main` function
 
@@ -35,7 +35,7 @@ fn main() {
 }
 ```
 
-
+<div class="note"></div>
 
 </div>
 
@@ -49,7 +49,7 @@ fn main() {
 }
 ```
 
-
+<div class="note"></div>
 
 </div>
 
@@ -63,9 +63,9 @@ fn main() {
 }
 ```
 
-This is the full example again. 
+<div class="note">This is the full example again. 
 It's editable and you can run
-it directly on the site.
+it directly on the site.</div>
 
 </div>
 

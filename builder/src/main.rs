@@ -99,10 +99,19 @@ fn build_output(page: &mut Page) {
     let raw_lines: Vec<&str> = page.source.as_ref().unwrap().split("\n").collect();
 
     println!("- Getting Examples");
-    for example in page.examples.iter() {
+    for (indx, example) in page.examples.iter().enumerate() {
+        println!("{}", indx);
         //dbg!(example);
 
-        page.output.push_str(r#"<div class="example">"#);
+        if indx == 0 {
+            page.output.push_str(r#"<div class="full_source">"#);
+        } else if indx == 1 {
+            page.output.push_str(r#"<h2>Step By Step</h2>"#);
+            page.output.push_str(r#"<div class="example">"#);
+        } else {
+            page.output.push_str(r#"<div class="example">"#);
+        }
+
         page.output.push_str("\n\n");
         page.output.push_str("### ");
 
@@ -158,6 +167,9 @@ fn build_output(page: &mut Page) {
         // output the local lines
         page.output.push_str(&local_lines.join("\n"));
         page.output.push_str("\n```\n\n");
+
+        // The note
+        page.output.push_str(r#"<div class="note">"#);
         page.output.push_str(
             example
                 .data
@@ -168,6 +180,8 @@ fn build_output(page: &mut Page) {
                 .as_str()
                 .unwrap(),
         );
+
+        page.output.push_str(r#"</div>"#);
 
         page.output.push_str("\n\n");
         page.output.push_str("</div>");

@@ -1,6 +1,7 @@
 :root {
-  --example-background-color: #001;
-  --example-font-color: #ccc;
+  --example-background-color: #000;
+  --editor-background-color: #0000008;
+  --example-font-color: #888;
   --example-border-color: #333;
   --example-border-radius: 0.6rem;
   --fader-font-color: #556;
@@ -28,8 +29,8 @@
   /* outline: 1px solid purple; */
   padding: 1rem;
   border-radius: var(--example-border-radius);
-  background-color: #000;
-  border: 1px solid var(--example-border-color);
+  background-color: var(--editor-background-color);
+  xborder: 1px solid var(--example-border-color);
 }
 
 div.example {
@@ -38,19 +39,43 @@ div.example {
   background-color: var(--example-background-color);
   color: var(--example-font-color);
   border-radius: var(--example-border-radius);
-  margin-bottom: 3.9rem;
+  margin-bottom: 4.5rem;
 }
 
 .example h3 {
   color: var(--example-font-color);
   margin-top: 1.2rem;
-  margin-left: 1.7rem;
+  margin-left: 4.4rem;
   margin-bottom: 0rem;
   padding-bottom: 1rem;
   font-size: 1.8rem;
 }
 
+.example .header:link {
+  color: var(--fader-font-color);
+}
+
+.example .note {
+  margin-left: 2.8rem;
+}
+
 .example pre {
   padding: 0;
   margin: 0;
+}
+
+.ace-tomorrow-night .ace_gutter {
+  background-color: var(--editor-background-color);
+  xborder-right: 1px solid var(--example-border-color);
+  color: var(--fader-font-color);
+}
+
+div.ace_gutter div.ace_gutter-cell.ace_gutter-active-line {
+  background-color: var(--editor-background-color);
+}
+
+code > div.ace_scroller {
+  border-bottom: 1px solid var(--example-border-color);
+  border-left: 1px solid var(--example-border-color);
+  border-top: 1px solid var(--example-border-color);
 }

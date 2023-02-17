@@ -11,30 +11,16 @@ use nom::multi::separated_list1;
 use nom::sequence::preceded;
 use nom::IResult;
 use serde::{Deserialize, Serialize};
-use serde_json::json;
-use serde_json::Result;
-use serde_json::Value;
 use serde_yaml::Value as YAMLValue;
 use std::fs;
 
-#[derive(Debug, Serialize, Deserialize)]
-struct LineSet {
-    active: Vec<i32>,
-    fades: Vec<i32>,
-    heading: String,
-    note: String,
-    overrides: Vec<i32>,
-    visible: Vec<i32>,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug)]
 struct Example {
     raw_text: String,
     data: Option<YAMLValue>,
-    // line_set: Option<serde_json::Value>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug)]
 struct Page {
     title: Option<String>,
     content: Option<String>,
@@ -76,12 +62,6 @@ fn main() {
         Ok(()) => println!("Got: YAML"),
         Err(e) => println!("Error Getting YAML: {}", e),
     }
-
-    dbg!(&page.examples[0]);
-
-    // dbg!(page);
-
-    //
 }
 
 fn get_yaml(page: &mut Page) -> AResult<()> {
@@ -111,91 +91,6 @@ fn get_examples(page: &mut Page) -> IResult<&str, &str> {
     Ok(("", ""))
 }
 
-// fn get_examples(page: &Page) -> Result<()> {
-//     Ok(())
-// }
-
-// fn get_raw_jsons(page: &mut Page) -> IResult<&str, &str> {
-//     for example in page.examples.iter_mut() {
-//         let (input, _) = tag("details:")(example.raw_text.as_str())?;
-//         let (input, raw_json) = take_until("note:")(input)?;
-//         // dbg!(raw_json.to_string());
-//         example.raw_json = Some(raw_json.trim().to_string());
-//         // example.line_set = serde_json::from_str(raw_json)?;
-//     }
-//     Ok(("", ""))
-// }
-
-//fn get_line_set(page: &mut Page) -> Result<&str> {
-//    for example in page.examples.iter_mut() {
-//        // This works
-//        example.line_set = serde_json::from_str("{\"a\":\"b\"}").unwrap();
-//        //dbg!(&example.line_set.as_ref().unwrap());
-//        //
-//        example.line_set = serde_json::from_str("{\"a\":\"b\"}").unwrap();
-//        //dbg!(&example.line_set.as_ref().unwrap());
-//        // dbg!(&example.raw_json.as_ref().unwrap());
-//        //
-//        // //////////////////////////////////////////////
-//        // Things that don't work
-//        // serde_json::from_str(&example.raw_json.as_ref().unwrap())?;
-//        // serde_json::from_str(&example.raw_json.unwrap_or("{}".to_string()));
-//        ////////////////////////////////////////
-//        // This doesn't work. It loads the data, but it's a String
-//        // dbg!(json!(&example.raw_json.as_ref().unwrap()));
-//        // example.line_set = Some((json!(&example.raw_json.as_ref().unwrap())));
-//        // dbg!(&example.line_set.as_ref()["heading"]);
-//        ///////////////////////////////////////////////////
-//        //// This fails
-//        //dbg!(&example.raw_json);
-//        //let v: Value = serde_json::from_str(&example.raw_json.as_ref().unwrap().as_str())?;
-//        //dbg!(v);
-//        ///////////////////////////////////////////////////
-//        //// This works now that the data is cleaned up
-//        //// dbg!(&example.raw_json);
-//        //let v: Value = serde_json::from_str(&example.raw_json.as_ref().unwrap().as_str()).unwrap();
-//        //dbg!(v);
-//        /////////////////////////////////////////////////////
-//        //// This works with less whatever
-//        //let v: Value = serde_json::from_str(&example.raw_json.as_ref().unwrap())?;
-//        //dbg!(v);
-//        ///////////////////////////////////////////////////
-//        // This works with less whatever
-//        example.line_set = serde_json::from_str(&example.raw_json.as_ref().unwrap())?;
-//        dbg!(&example.line_set.as_ref().unwrap()["heading"]
-//            .as_str()
-//            .unwrap());
-//        println!(
-//            "{}",
-//            &example.line_set.as_ref().unwrap()["heading"]
-//                .as_str()
-//                .unwrap()
-//        );
-//        ///////////////////////////////////////////////
-//        //
-//        //
-//        //
-//        //
-//        //
-//        //
-//        //
-//        // dbg!(serde_json::from_str(&example.raw_json.as_ref().unwrap())?);
-//        // example.line_set = Some(serde_json::from_str(example.raw_json.unwrap())?).ok_or("asdf")?;
-//        // let v: Value = example.raw_json.unwrap().into();
-//        // dbg!(example.raw_json.as_ref().unwrap());
-//        // dbg!(serde_json::from_str(&example.raw_json.unwrap().as_str()));
-//        //dbg!(serde_json::from_str(
-//        //   example.raw_json.as_ref().unwrap().as_str()
-//        // )?);
-//        //example.line_set = Some(serde_json::from_str(example.raw_json.as_ref().unwrap())?);
-//        // dbg!(serde_json::from_str(Some(&example.raw_json).unwrap()));
-//        // dbg!(serde_json::from_str(example.raw_json).unwrap().to_str());
-//        // example.line_set = serde_json::from_str(example.raw_json))?;
-//    }
-//    // dbg!(page);
-//    Ok("")
-//}
-
 fn get_content(page: &mut Page) -> IResult<&str, &str> {
     let (input, _) = take_until("---> CONTENT")(page.raw_text.as_str())?;
     let (input, _) = tag("---> CONTENT")(input)?;
@@ -221,98 +116,3 @@ fn get_title(page: &mut Page) -> IResult<&str, &str> {
     page.title = Some(title.to_string());
     Ok(("", ""))
 }
-
-// use serde::{Deserialize, Serialize};
-// use serde_json::Result;
-// use serde_json::Value;
-
-// #[derive(Serialize, Deserialize)]
-// struct LineSet {
-//     lines: Vec<i32>,
-//     highlights: Vec<i32>,
-//     heading: String,
-//     note: String,
-// }
-
-// #[derive(Serialize, Deserialize)]
-// struct Example {
-//     set: Vec<LineSet>,
-// }
-
-// fn main() {
-//     let mut contents = String::from("");
-//     let file_data = fs::read_to_string("content/index.mdx").unwrap();
-//     // Get the page title
-//     let (input, title) = get_title(&file_data).unwrap();
-//     contents.push_str("# ");
-//     contents.push_str(title);
-//     // Get the main body of contents
-//     let (input, data) = get_content(input).unwrap();
-//     contents.push_str("\n");
-//     contents.push_str("\n");
-//     contents.push_str(data);
-//     // Get the source code.
-//     let (input, source) = get_source(input).unwrap();
-//     contents.push_str("\n");
-//     contents.push_str("```rust, editable");
-//     contents.push_str("\n");
-//     contents.push_str(source.trim());
-//     contents.push_str("\n");
-//     contents.push_str("```");
-//     let the_lines: Vec<String> = source.trim().lines().map(str::to_string).collect();
-//     println!("{:?}", the_lines);
-//     // // Get the JSON
-//     // let (input, json_data) = get_json(input).unwrap();
-//     // let input = make_json(json_data).unwrap();
-//     // println!("{:?}", input);
-//     // // let e: Example = serde_json::from_str(json_data).unwrap();
-//     // Output the file
-//     output_file(&contents);
-// }
-
-// fn get_content(input: &str) -> IResult<&str, &str> {
-//     let (input, newline) = multispace1(input)?;
-//     let (input, header) = tag("---> CONTENT")(input)?;
-//     let (input, data) = take_until("--->")(input)?;
-//     Ok((input, data))
-// }
-
-// fn make_json(input: &str) -> Result<Value> {
-//     // let data = r#"
-//     //     {
-//     //         "name": "John Doe",
-//     //         "age": 43,
-//     //         "phones": [
-//     //             "+44 1234567",
-//     //             "+44 2345678"
-//     //         ]
-//     //     }"#;
-//     println!("{}", input);
-//     let v: Value = serde_json::from_str(input)?;
-//     Ok(v)
-// }
-
-// fn get_json(input: &str) -> IResult<&str, &str> {
-//     let (input, data) = tag("---> JSON")(input)?;
-//     let (input, data) = rest(input)?;
-//     Ok((input, data))
-// }
-
-// fn get_source(input: &str) -> IResult<&str, &str> {
-//     let (input, newline) = multispace0(input)?;
-//     let (input, header) = tag("---> SOURCE")(input)?;
-//     let (input, data) = multispace0(input)?;
-//     let (input, data) = take_until("--->")(input)?;
-//     Ok((input, data))
-// }
-
-// fn get_title(input: &str) -> IResult<&str, &str> {
-//     let (input, header) = tag("---> TITLE")(input)?;
-//     let (input, newline) = multispace1(input)?;
-//     let (input, title) = not_line_ending(input)?;
-//     Ok((input, title))
-// }
-
-// fn output_file(content: &str) {
-//     fs::write("../src/index.md", content).unwrap();
-// }

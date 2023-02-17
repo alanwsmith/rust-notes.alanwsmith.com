@@ -15,16 +15,20 @@ const faderSelectors = [
   '.ace_double',
   '.ace_punctuation',
   '.ace_rparen',
+  '.ace_name',
+  '.ace_entity.ace_name.ace_function',
 ]
 
 const prepLineFades = () => {
   c.sets.forEach((faderSet, faderSetIndex) => {
-    faderSet.fadeLines.forEach((fadeLine, fadeLineIndex) => {
+    faderSet.fadeLines.forEach((fadeLine) => {
       const playgroundNumber = faderSet + 1
-      const lineNumber = fadeLineIndex + 1
+      const lineNumber = fadeLine
 
-      const fadeString = `.ace_line:nth-child(${lineNumber}) span { border: 1px solid red; }`
-      c.faderStyles.push(fadeString)
+      faderSelectors.forEach((faderSelector) => {
+        const fadeString = `#playground${faderSetIndex} .ace_line:nth-child(${lineNumber}) ${faderSelector} { color: #333; }`
+        c.faderStyles.push(fadeString)
+      })
 
       // const fadeElements = document.querySelectorAll(
       //   '#content > main > pre:nth-child(6) > pre > code > div.ace_scroller > div > div.ace_layer.ace_text-layer > div > span'
@@ -54,7 +58,20 @@ const makeStyleSheet = () => {
 }
 
 const updateStyles = () => {
+  // c.faderStyles.push(
+  //   `main .playground:nth-of-type(1) { border: 1px solid red; }`
+  // )
+
   c.styleOverride.innerHTML = c.faderStyles.join('\n')
+  //console.log(c.faderStyles.join('\n'))
+}
+
+const addClasses = () => {
+  document
+    .querySelectorAll('main pre.playground')
+    .forEach((item, itemIndex) => {
+      item.id = `playground${itemIndex}`
+    })
 }
 
 const faderInit = () => {
@@ -62,6 +79,7 @@ const faderInit = () => {
     console.log('Got fader config')
     c.faderStyles = []
     makeStyleSheet()
+    addClasses()
     getPlaygrounds()
     prepLineFades()
     updateStyles()

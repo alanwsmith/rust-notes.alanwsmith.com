@@ -25,7 +25,6 @@ const prepLineFades = () => {
     faderSet.fadeLines.forEach((fadeLine) => {
       const playgroundNumber = faderSet + 1
       const lineNumber = fadeLine
-
       faderSelectors.forEach((faderSelector) => {
         const fadeString = `#playground${faderSetIndex} .ace_line:nth-child(${lineNumber}) ${faderSelector} { color: #333; }`
         c.faderStyles.push(fadeString)
@@ -33,22 +32,7 @@ const prepLineFades = () => {
       c.faderStyles.push(
         `#playground${faderSetIndex} .ace_line:nth-child(${lineNumber}) { color: #333; }`
       )
-
-      // const fadeElements = document.querySelectorAll(
-      //   '#content > main > pre:nth-child(6) > pre > code > div.ace_scroller > div > div.ace_layer.ace_text-layer > div > span'
-      // )
-      // fadeElements.forEach((fadeElement, fadeElementIndex) => {
-      //   fadeElement.style.border = '1px solid red'
-      // })
     })
-
-    // console.log(lineSet)
-    // console.log(c.playgrounds[lineSetIndex])
-    // console.log(c.playgrounds[0].querySelector('.ace_line:nth-child(1)'))
-    // c.playgrounds[0]
-    //   .querySelector('.ace_line')
-    //   .classList.remove('ace-tomorrow-night')
-    // c.playgrounds[0].querySelector('.ace_line').classList.remove('ace_keyword')
   })
 }
 
@@ -62,12 +46,7 @@ const makeStyleSheet = () => {
 }
 
 const updateStyles = () => {
-  // c.faderStyles.push(
-  //   `main .playground:nth-of-type(1) { border: 1px solid red; }`
-  // )
-
   c.styleOverride.innerHTML = c.faderStyles.join('\n')
-  //console.log(c.faderStyles.join('\n'))
 }
 
 const addClasses = () => {

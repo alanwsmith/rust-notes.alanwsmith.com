@@ -14,13 +14,13 @@ use serde::{Deserialize, Serialize};
 use serde_yaml::Value as YAMLValue;
 use std::fs;
 
-#[derive(Debug)]
+#[derive(Debug, Deserialize, Serialize)]
 struct Example {
     raw_text: String,
     data: Option<YAMLValue>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Deserialize, Serialize)]
 struct Page {
     title: Option<String>,
     content: Option<String>,
@@ -86,12 +86,55 @@ fn build_output(page: &mut Page) {
     page.output
         .push_str(page.content.as_ref().unwrap().as_str());
     page.output.push_str("\n\n");
+    for example in page.examples.iter() {
+        page.output.push_str("### ");
+        page.output.push_str(
+            example
+                .data
+                .as_ref()
+                .unwrap()
+                .get("heading")
+                .unwrap()
+                .as_str()
+                .unwrap(),
+        );
+        page.output.push_str("\n");
+
+        // page.output.push_str(example.data);
+        page.output.push_str("```rust\n");
+
+        // let tmp: String = example.data.as_ref().unwrap().get("heading").unwrap();
+        // page.output.push_str(tmp.to_string().as_str());
+
+        //
+        //
+        /////////////////////////////////////////////////
+        ///
+        /// This doesn't work it complasins it's not a
+        /// &str, but a vlue
+        // page.output
+        //  .push_str(example.data.as_ref().unwrap()["heading"] as String);
+        ///
+        ///
+        // page.output
+        //  .push_str(example.data.as_ref().unwrap().get("heading").unwrap());
+        // page.output.push_str(example.data.unwrap().get("heading"));
+        //
+        /////////////////////////////////////////////////
+        ///This works
+        // dbg!(&example.data.as_ref().unwrap().get("heading").unwrap());
+
+        /////////////////////////////////////////////////
+        ///
+        dbg!(&example.data.as_ref().unwrap()["heading"]);
+        // dbg!(&example.data.as_ref().unwrap()["heading"]);
+        //
+        page.output.push_str("```\n");
+    }
 }
 
 fn get_yaml(page: &mut Page) -> AResult<()> {
     for example in page.examples.iter_mut() {
-        // dbg!(&example.raw_text);
-        //let v: Value = serde_yaml::from_str(&example.raw_text)?;
         example.data = serde_yaml::from_str(&example.raw_text)?;
     }
     Ok(())

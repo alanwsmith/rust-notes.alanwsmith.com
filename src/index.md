@@ -16,3 +16,9 @@ with "Hello World"
 This is a test note for putting content 
 after the source blocks
 
+### Full Source Code
+```rust
+```
+### Add the `main` function
+```rust
+```

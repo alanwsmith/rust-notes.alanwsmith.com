@@ -156,7 +156,7 @@ fn build_output(page: &mut Page) {
 
         page.output.push_str("\n\n");
     }
-    page.output.push_str(r#" <script>const s = { sets: [ "#);
+    page.output.push_str(r#" <script>const c = { sets: [ "#);
 
     for example in page.examples.iter() {
         page.output.push_str("{ fades: [");
@@ -185,11 +185,30 @@ fn build_output(page: &mut Page) {
                 .push_str(&fades.get("end").unwrap().as_u64().unwrap().to_string());
             page.output.push_str("},");
         }
+        page.output.push_str("],");
+
+        // Do "active"
+
+        page.output.push_str("active: [");
+        for active_number in example
+            .data
+            .as_ref()
+            .unwrap()
+            .get("active")
+            .unwrap()
+            .as_sequence()
+            .unwrap()
+        {
+            // dbg!(active_number.as_u64().unwrap());
+            page.output
+                .push_str(&active_number.as_u64().unwrap().to_string());
+            page.output.push_str(",");
+        }
+
         page.output.push_str("]},");
     }
 
-    page.output
-        .push_str(r#"] }; console.log("bravo"); </script>"#);
+    page.output.push_str(r#"] }; </script>"#);
 }
 
 fn get_yaml(page: &mut Page) -> AResult<()> {

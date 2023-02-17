@@ -138,8 +138,6 @@ fn build_output(page: &mut Page) {
             local_lines[override_index] = override_text;
             dbg!(override_index);
             dbg!(override_text);
-
-            //dbg!(&override_value["line"]);
         }
 
         // output the local lines

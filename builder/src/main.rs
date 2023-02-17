@@ -109,7 +109,6 @@ fn build_output(page: &mut Page) {
         // Make a vec to hold the local source code lines
         let mut local_lines = vec![""];
         local_lines.resize(raw_lines.len(), "");
-        local_lines[0] = "asdf";
         page.output.push_str(&local_lines.join("\n"));
 
         // dbg!(&example.data.as_ref().unwrap().get("visible").unwrap());
@@ -123,17 +122,23 @@ fn build_output(page: &mut Page) {
             .as_sequence()
             .unwrap()
         {
+            let active_index = visible_line_number.as_u64().unwrap() as usize - 1;
+            local_lines[active_index] = raw_lines[active_index];
+
+            // dbg!(&active_index);
+
             // dbg!(visible_line_number);
-            dbg!(&raw_lines[visible_line_number.as_u64().unwrap() as usize - 1]);
+            // dbg!(&raw_lines[visible_line_number.as_u64().unwrap() as usize - 1]);
             // dbg!(&raw_lines);
             // dbg!(&raw_lines[0]);
         }
 
-        // for source_line in &local_lines {
-        //     page.output.push_str(source_line);
-        //     page.output.push_str("asdf");
-        //     // dbg!(source_line);
-        // }
+        for source_line in &local_lines {
+            page.output.push_str(source_line);
+            page.output.push_str("\n");
+            // page.output.push_str("asdf");
+            // dbg!(source_line);
+        }
 
         //let source_lines = page.source.as_ref().unwrap().split("\n");
         // dbg!(source_lines);

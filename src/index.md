@@ -18,8 +18,11 @@ after the source blocks
 
 ### Full Source Code
 ```rust
-asdf
 
+
+fn main() {
+  println!("Hello, World");
+}
 
 ```
 
@@ -32,8 +35,11 @@ step by step to show how it works.
 
 ### Add the `main` function
 ```rust
-asdf
 
+
+fn main() {
+
+}
 
 ```
 

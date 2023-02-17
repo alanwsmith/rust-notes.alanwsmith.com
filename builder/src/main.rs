@@ -14,6 +14,13 @@ use serde::{Deserialize, Serialize};
 use serde_yaml::Value as YAMLValue;
 use std::fs;
 
+//////////////////////////////////////////
+// Hi! This is the first real Rust code
+// I've ever written. It's ugly and I
+// know a bunch of stuff I'd change.
+// That doesn't matter though. It works!
+//////////////////////////////////////////
+
 #[derive(Debug, Deserialize, Serialize)]
 struct Example {
     raw_text: String,
@@ -159,13 +166,13 @@ fn build_output(page: &mut Page) {
     page.output.push_str(r#" <script>const c = { sets: [ "#);
 
     for example in page.examples.iter() {
-        page.output.push_str("{ fadeCharacters: [");
+        page.output.push_str("{ fadeWords: [");
 
         for fades in example
             .data
             .as_ref()
             .unwrap()
-            .get("fadeCharacters")
+            .get("fadeWords")
             .unwrap()
             .as_sequence()
             .unwrap()
@@ -175,14 +182,18 @@ fn build_output(page: &mut Page) {
             page.output.push_str("line: ");
             page.output
                 .push_str(&fades.get("line").unwrap().as_u64().unwrap().to_string());
+            //
             page.output.push_str(",");
-            page.output.push_str("start: ");
+            page.output.push_str("word: ");
             page.output
-                .push_str(&fades.get("start").unwrap().as_u64().unwrap().to_string());
-            page.output.push_str(",");
-            page.output.push_str("end: ");
-            page.output
-                .push_str(&fades.get("end").unwrap().as_u64().unwrap().to_string());
+                .push_str(&fades.get("word").unwrap().as_u64().unwrap().to_string());
+
+            ////
+            //page.output.push_str(",");
+            //page.output.push_str("end: ");
+            //page.output
+            //    .push_str(&fades.get("end").unwrap().as_u64().unwrap().to_string());
+
             page.output.push_str("},");
         }
         page.output.push_str("],");

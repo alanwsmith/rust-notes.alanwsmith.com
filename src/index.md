@@ -17,7 +17,7 @@ after the source blocks
 ### Full Source Code
 ```rust, editable
 fn main() {
-the quick brown fox
+  the quick brown fox
 }
 ```
 
@@ -39,4 +39,4 @@ Each program starts with a `main` function
 which is where Rust first looks when it starts
 things up.
 
- <script>const c = { sets: [ { fadeCharacters: [{line: 3,start: 1,end: 7},],fadeLines: [2,3,]},{ fadeCharacters: [],fadeLines: [1,]},] }; </script>
+ <script>const c = { sets: [ { fadeWords: [{line: 3,word: 1},],fadeLines: [2,3,]},{ fadeWords: [],fadeLines: [1,]},] }; </script>

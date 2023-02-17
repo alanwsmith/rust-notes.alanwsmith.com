@@ -8,3 +8,4 @@
 - Turn off undo button (feels more noise then useful)
 - Prevent top bar from floating back in and covering run buttons
 - Add notes section after the examples
+- Turn off search since there is no backend

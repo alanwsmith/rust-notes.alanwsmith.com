@@ -1,6 +1,6 @@
 :root {
-  --example-background-color: #000;
-  --editor-background-color: #0000008;
+  --example-background-color: #000019;
+  --editor-background-color: #000000;
   --example-font-color: #888;
   --example-border-color: #333;
   --example-border-radius: 0.6rem;
@@ -56,7 +56,9 @@ div.example {
 }
 
 .example .note {
-  margin-left: 2.8rem;
+  margin-top: 2.2rem;
+  margin-left: 4.6rem;
+  margin-bottom: 2.2rem;
 }
 
 .example pre {
@@ -65,17 +67,21 @@ div.example {
 }
 
 .ace-tomorrow-night .ace_gutter {
-  background-color: var(--editor-background-color);
+  background-color: var(--example-background-color);
   xborder-right: 1px solid var(--example-border-color);
   color: var(--fader-font-color);
 }
 
 div.ace_gutter div.ace_gutter-cell.ace_gutter-active-line {
-  background-color: var(--editor-background-color);
+  background-color: var(--example-background-color);
 }
 
 code > div.ace_scroller {
   border-bottom: 1px solid var(--example-border-color);
   border-left: 1px solid var(--example-border-color);
   border-top: 1px solid var(--example-border-color);
+}
+
+.ace_dark .ace_fold-widget {
+  background-image: none;
 }

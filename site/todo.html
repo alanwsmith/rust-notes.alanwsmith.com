@@ -139,6 +139,7 @@
 <li>Turn off undo button (feels more noise then useful)</li>
 <li>Prevent top bar from floating back in and covering run buttons</li>
 <li>Add notes section after the examples</li>
+<li>Turn off search since there is no backend</li>
 </ul>
 
                     </main>
@@ -165,6 +166,8 @@
         </div>
 
         <!-- Livereload script (if served using the cli tool) -->
+        <!-- TURNING OFF WHILE WORKING ON CSS WHICH 
+              FREAKS OUT THE RELOAD PROCESS
         <script>
             const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
             const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
@@ -180,6 +183,7 @@
                 socket.close();
             }
         </script>
+        -->
 
 
         <script>

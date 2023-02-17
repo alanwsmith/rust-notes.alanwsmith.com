@@ -1,0 +1,5 @@
+.ace_paren,
+.ace_rparen,
+.ace_lparen {
+  color: var(--fg);
+}

@@ -39,7 +39,7 @@ struct Page {
 
 fn main() {
     let mut page = Page {
-        raw_text: fs::read_to_string("content/index.mdx").unwrap(),
+        raw_text: fs::read_to_string("content/index.neo").unwrap(),
         title: None,
         content: None,
         source: None,
@@ -87,6 +87,7 @@ fn write_output(text: &String) -> std::io::Result<()> {
 }
 
 fn build_output(page: &mut Page) {
+    println!("- Making Title");
     page.output.push_str("# ");
     page.output.push_str(page.title.as_ref().unwrap().as_str());
     page.output.push_str("\n\n");
@@ -97,10 +98,12 @@ fn build_output(page: &mut Page) {
     // Pull the source code into a Vec.
     let raw_lines: Vec<&str> = page.source.as_ref().unwrap().split("\n").collect();
 
+    println!("- Getting Examples");
     for example in page.examples.iter() {
         //dbg!(example);
 
         page.output.push_str("### ");
+
         page.output.push_str(
             example
                 .data
@@ -111,6 +114,7 @@ fn build_output(page: &mut Page) {
                 .as_str()
                 .unwrap(),
         );
+
         page.output.push_str("\n");
         page.output.push_str("```rust, editable\n");
 
@@ -127,6 +131,7 @@ fn build_output(page: &mut Page) {
             .as_sequence()
             .unwrap()
         {
+            println!("- Getting Visible Lines");
             let active_index = visible_line_number.as_u64().unwrap() as usize - 1;
             local_lines[active_index] = raw_lines[active_index];
         }
@@ -140,6 +145,7 @@ fn build_output(page: &mut Page) {
             .as_sequence()
             .unwrap()
         {
+            println!("- Getting Override Lines");
             let override_index = override_value["line"].as_u64().unwrap() as usize - 1;
             let override_text = override_value["text"].as_str().unwrap();
             local_lines[override_index] = override_text;
@@ -166,17 +172,19 @@ fn build_output(page: &mut Page) {
     page.output.push_str(r#" <script>const c = { sets: [ "#);
 
     for example in page.examples.iter() {
-        page.output.push_str("{ fadeWords: [");
+        println!("- Getting fadeWordSets");
 
+        page.output.push_str("{ fadeWordSets: [");
         for fades in example
             .data
             .as_ref()
             .unwrap()
-            .get("fadeWords")
+            .get("fadeWordSets")
             .unwrap()
             .as_sequence()
             .unwrap()
         {
+            println!("  - fadeWordSet");
             // dbg!(fades.get("line").unwrap().as_u64().unwrap());
             page.output.push_str("{");
             page.output.push_str("line: ");
@@ -191,15 +199,6 @@ fn build_output(page: &mut Page) {
                 page.output.push_str(&word.as_u64().unwrap().to_string());
                 page.output.push_str(", ");
             }
-
-            // page.output
-            //     .push_str(&fades.get("words").unwrap().as_u64().unwrap().to_string());
-
-            ////
-            //page.output.push_str(",");
-            //page.output.push_str("end: ");
-            //page.output
-            //    .push_str(&fades.get("end").unwrap().as_u64().unwrap().to_string());
 
             page.output.push_str("]},");
         }

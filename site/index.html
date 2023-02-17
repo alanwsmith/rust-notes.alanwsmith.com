@@ -29,6 +29,7 @@
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/css/_overrides.css">
 
     </head>
     <body>
@@ -138,25 +139,49 @@ I do.</p>
 a full set of source code then show how to
 put it together step-by-step. Here's an example
 with &quot;Hello World&quot;</p>
-<p>This is a test note for putting content 
-after the source blocks</p>
 <h3 id="full-source-code"><a class="header" href="#full-source-code">Full Source Code</a></h3>
 <pre><pre class="playground"><code class="language-rust  editable">fn main() {
   println!(&quot;Hello, World&quot;);
 }</code></pre></pre>
-<p>This is the full source code for 
-<code>Hello, World</code>.</p>
-<p>The examples on the site start with the 
-full source code then go through it 
-step by step to show how it works.</p>
+<p>This is the full source code for
+<code>Hello, World</code>. You can run it or 
+mess with it here or in last example
+below. </p>
+<p>Here's the step-by-step
+build process.</p>
 <h3 id="add-the-main-function"><a class="header" href="#add-the-main-function">Add the <code>main</code> function</a></h3>
 <pre><pre class="playground"><code class="language-rust  editable">fn main() {
-  the quick brown fox
+
 }</code></pre></pre>
-<p>Each program starts with a <code>main</code> function
-which is where Rust first looks when it starts
-things up.</p>
-<script>const c = { sets: [ { fadeWords: [{line: 2,words: [1, 2, 3, ]},],fadeLines: [1,]},{ fadeWords: [],fadeLines: [1,]},] }; </script>
+<p>The samples on the site are full, runnable
+programs. They start with this <code>main</code> function
+which is where Rust kicks things off in 
+a program.</p>
+<h3 id="stub-out-a-print-line-expression"><a class="header" href="#stub-out-a-print-line-expression">Stub out a print line expression</a></h3>
+<pre><pre class="playground"><code class="language-rust  editable">fn main() {
+  println!();
+}</code></pre></pre>
+<p>Printing a line to the terminal is done
+with <code>println!()</code> expressions. The <code>!</code> means
+<code>println</code> is a &quot;macro&quot;. We need to cover a few
+more things before that makes much sense. For now, 
+just know that the <code>!</code> needs to be there and it's 
+super easy to miss.</p>
+<h3 id="fill-in-the-text"><a class="header" href="#fill-in-the-text">Fill in the text</a></h3>
+<pre><pre class="playground"><code class="language-rust  editable">fn main() {
+  println!(&quot;Hello, World&quot;);
+}</code></pre></pre>
+<p>The area in quotes in a <code>println!()</code> 
+expression is called a &quot;format string&quot;.
+We'll look at how to add variables 
+to is shortly.</p>
+<h3 id="run-it"><a class="header" href="#run-it">Run it</a></h3>
+<pre><pre class="playground"><code class="language-rust  editable">fn main() {
+  println!(&quot;Hello, World&quot;);
+}</code></pre></pre>
+<p>Here's another copy of the code you can play
+around with and run directly on the site.</p>
+<script>const c = { sets: [ { fadeWordSets: [],fadeLines: []},{ fadeWordSets: [],fadeLines: []},{ fadeWordSets: [],fadeLines: [1,3,]},{ fadeWordSets: [{line: 2,words: [1, ]},],fadeLines: [1,3,]},{ fadeWordSets: [],fadeLines: []},] }; </script>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

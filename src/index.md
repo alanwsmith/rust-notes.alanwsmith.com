@@ -11,9 +11,6 @@ a full set of source code then show how to
 put it together step-by-step. Here's an example
 with "Hello World"
 
-This is a test note for putting content 
-after the source blocks
-
 ### Full Source Code
 ```rust, editable
 fn main() {
@@ -21,22 +18,60 @@ fn main() {
 }
 ```
 
-This is the full source code for 
-`Hello, World`.
+This is the full source code for
+`Hello, World`. You can run it or 
+mess with it here or in last example
+below. 
 
-The examples on the site start with the 
-full source code then go through it 
-step by step to show how it works.
+Here's the step-by-step
+build process.
 
 ### Add the `main` function
 ```rust, editable
 fn main() {
-  the quick brown fox
+
 }
 ```
 
-Each program starts with a `main` function
-which is where Rust first looks when it starts
-things up.
+The samples on the site are full, runnable
+programs. They start with this `main` function
+which is where Rust kicks things off in 
+a program.
 
- <script>const c = { sets: [ { fadeWords: [{line: 2,words: [1, 2, 3, ]},],fadeLines: [1,]},{ fadeWords: [],fadeLines: [1,]},] }; </script>
+### Stub out a print line expression
+```rust, editable
+fn main() {
+  println!();
+}
+```
+
+Printing a line to the terminal is done
+with `println!()` expressions. The `!` means
+`println` is a "macro". We need to cover a few
+more things before that makes much sense. For now, 
+just know that the `!` needs to be there and it's 
+super easy to miss.
+
+### Fill in the text
+```rust, editable
+fn main() {
+  println!("Hello, World");
+}
+```
+
+The area in quotes in a `println!()` 
+expression is called a "format string".
+We'll look at how to add variables 
+to is shortly.
+
+### Run it
+```rust, editable
+fn main() {
+  println!("Hello, World");
+}
+```
+
+Here's another copy of the code you can play
+around with and run directly on the site.
+
+ <script>const c = { sets: [ { fadeWordSets: [],fadeLines: []},{ fadeWordSets: [],fadeLines: []},{ fadeWordSets: [],fadeLines: [1,3,]},{ fadeWordSets: [{line: 2,words: [1, ]},],fadeLines: [1,3,]},{ fadeWordSets: [],fadeLines: []},] }; </script>

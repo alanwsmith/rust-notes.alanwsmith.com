@@ -38,9 +38,17 @@ const prepLineFades = () => {
 
 const prepWordFades = () => {
   c.sets.forEach((faderSet, faderSetIndex) => {
-    faderSet.fadeWords.forEach((fadeWord) => {
-      console.log(fadeWord.line)
-      console.log(fadeWord.word)
+    faderSet.fadeWordSets.forEach((fadeWordSet) => {
+      fadeWordSet.words.forEach((fadeWord) => {
+        c.faderStyles.push(
+          `#playground${faderSetIndex} .ace_line:nth-child(${fadeWordSet.line}) span:nth-child(${fadeWord}) { color: #333; }`
+        )
+        c.faderStyles.push(
+          `#playground${faderSetIndex} .ace_line:nth-child(${fadeWordSet.line}):not(span) { color: #333; }`
+        )
+        console.log(fadeWordSet.line)
+        console.log(fadeWord)
+      })
     })
   })
 }

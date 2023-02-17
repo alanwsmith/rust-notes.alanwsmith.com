@@ -10,6 +10,7 @@ build-dir = "site"
 
 [output.html]
 additional-js = [ "theme/fader.js"]
+additional-css = [ "theme/css/_overrides.css"]
 
 [output.html.playground]
 editable = true

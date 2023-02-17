@@ -27,6 +27,7 @@ struct Page {
     source: Option<String>,
     raw_text: String,
     examples: Vec<Example>,
+    output: String,
 }
 
 fn main() {
@@ -36,6 +37,7 @@ fn main() {
         content: None,
         source: None,
         examples: vec![],
+        output: String::from(""),
     };
 
     match get_title(&mut page) {
@@ -62,6 +64,28 @@ fn main() {
         Ok(()) => println!("Got: YAML"),
         Err(e) => println!("Error Getting YAML: {}", e),
     }
+
+    build_output(&mut page);
+    write_output(page.output);
+
+    // dbg!(&page.output);
+}
+
+fn write_output(text: String) -> std::io::Result<()> {
+    fs::write(
+        "/Users/alan/workshop/rust-notes.alanwsmith.com/src/index.md",
+        text,
+    )?;
+    Ok(())
+}
+
+fn build_output(page: &mut Page) {
+    page.output.push_str("# ");
+    page.output.push_str(page.title.as_ref().unwrap().as_str());
+    page.output.push_str("\n\n");
+    page.output
+        .push_str(page.content.as_ref().unwrap().as_str());
+    page.output.push_str("\n\n");
 }
 
 fn get_yaml(page: &mut Page) -> AResult<()> {

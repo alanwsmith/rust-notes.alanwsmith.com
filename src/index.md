@@ -1,7 +1,5 @@
 # Introduction
 
-
-
 One of the ways I learn is by doing write-ups of
 whatever I'm working on. Right now, that's rust.
 I'm putting this site together to collect them.
@@ -15,9 +13,6 @@ with "Hello World"
 
 <div id="source" />
 
+This is a test note for putting content 
+after the source blocks
 
-```rust, editable
-fn main() {
-println!("Hello, World");
-}
-```

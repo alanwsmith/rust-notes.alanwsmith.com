@@ -18,12 +18,9 @@ after the source blocks
 
 ### Full Source Code
 ```rust
-
-
 fn main() {
   println!("Hello, World");
 }
-
 ```
 
 This is the full source code for 
@@ -35,12 +32,9 @@ step by step to show how it works.
 
 ### Add the `main` function
 ```rust
-
-
 fn main() {
 
 }
-
 ```
 
 Each program starts with a `main` function

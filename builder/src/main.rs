@@ -170,16 +170,21 @@ fn build_output(page: &mut Page) {
             .as_sequence()
             .unwrap()
         {
-            dbg!(fades.get("line").unwrap().as_u64().unwrap());
-            page.output.push_str("{ line: ");
+            // dbg!(fades.get("line").unwrap().as_u64().unwrap());
+            page.output.push_str("{");
+            page.output.push_str("line: ");
             page.output
                 .push_str(&fades.get("line").unwrap().as_u64().unwrap().to_string());
-            // page.output.push_str("1");
-            // page.output
-            //  .push_str(fades.get("line").unwrap().as_str().unwrap());
+            page.output.push_str(",");
+            page.output.push_str("start: ");
+            page.output
+                .push_str(&fades.get("start").unwrap().as_u64().unwrap().to_string());
+            page.output.push_str(",");
+            page.output.push_str("end: ");
+            page.output
+                .push_str(&fades.get("end").unwrap().as_u64().unwrap().to_string());
             page.output.push_str("},");
         }
-
         page.output.push_str("]},");
     }
 

@@ -100,36 +100,24 @@ fn build_output(page: &mut Page) {
         );
         page.output.push_str("\n");
 
-        // page.output.push_str(example.data);
         page.output.push_str("```rust\n");
 
-        // let tmp: String = example.data.as_ref().unwrap().get("heading").unwrap();
-        // page.output.push_str(tmp.to_string().as_str());
+        page.output.push_str(page.source.as_ref().unwrap().as_str());
 
-        //
-        //
-        /////////////////////////////////////////////////
-        ///
-        /// This doesn't work it complasins it's not a
-        /// &str, but a vlue
-        // page.output
-        //  .push_str(example.data.as_ref().unwrap()["heading"] as String);
-        ///
-        ///
-        // page.output
-        //  .push_str(example.data.as_ref().unwrap().get("heading").unwrap());
-        // page.output.push_str(example.data.unwrap().get("heading"));
-        //
-        /////////////////////////////////////////////////
-        ///This works
-        // dbg!(&example.data.as_ref().unwrap().get("heading").unwrap());
+        page.output.push_str("\n```\n\n");
 
-        /////////////////////////////////////////////////
-        ///
-        dbg!(&example.data.as_ref().unwrap()["heading"]);
-        // dbg!(&example.data.as_ref().unwrap()["heading"]);
-        //
-        page.output.push_str("```\n");
+        page.output.push_str(
+            example
+                .data
+                .as_ref()
+                .unwrap()
+                .get("note")
+                .unwrap()
+                .as_str()
+                .unwrap(),
+        );
+
+        page.output.push_str("\n\n");
     }
 }
 

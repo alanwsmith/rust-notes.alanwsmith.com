@@ -18,7 +18,26 @@ after the source blocks
 
 ### Full Source Code
 ```rust
+fn main() {
+  println!("Hello, World");
+}
 ```
+
+This is the full source code for 
+`Hello, World`.
+
+The examples on the site start with the 
+full source code then go through it 
+step by step to show how it works.
+
 ### Add the `main` function
 ```rust
+fn main() {
+  println!("Hello, World");
+}
 ```
+
+Each program starts with a `main` function
+which is where Rust first looks when it starts
+things up.
+

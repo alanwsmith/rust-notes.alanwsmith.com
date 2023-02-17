@@ -89,7 +89,7 @@ fn build_output(page: &mut Page) {
 
     // Pull the source code into a Vec.
     let raw_lines: Vec<&str> = page.source.as_ref().unwrap().split("\n").collect();
-    dbg!(&raw_lines);
+    // dbg!(&raw_lines);
 
     for example in page.examples.iter() {
         page.output.push_str("### ");
@@ -104,16 +104,30 @@ fn build_output(page: &mut Page) {
                 .unwrap(),
         );
         page.output.push_str("\n");
-
         page.output.push_str("```rust\n");
 
         // Make a vec to hold the local source code lines
         let mut local_lines = vec![""];
         local_lines.resize(raw_lines.len(), "");
-
         local_lines[0] = "asdf";
-
         page.output.push_str(&local_lines.join("\n"));
+
+        // dbg!(&example.data.as_ref().unwrap().get("visible").unwrap());
+
+        for visible_line_number in example
+            .data
+            .as_ref()
+            .unwrap()
+            .get("visible")
+            .unwrap()
+            .as_sequence()
+            .unwrap()
+        {
+            // dbg!(visible_line_number);
+            dbg!(&raw_lines[visible_line_number.as_u64().unwrap() as usize - 1]);
+            // dbg!(&raw_lines);
+            // dbg!(&raw_lines[0]);
+        }
 
         // for source_line in &local_lines {
         //     page.output.push_str(source_line);

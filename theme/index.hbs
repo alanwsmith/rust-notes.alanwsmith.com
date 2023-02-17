@@ -220,6 +220,8 @@
 
         {{#if live_reload_endpoint}}
         <!-- Livereload script (if served using the cli tool) -->
+        <!-- TURNING OFF WHILE WORKING ON CSS WHICH 
+              FREAKS OUT THE RELOAD PROCESS
         <script>
             const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
             const wsAddress = wsProtocol + "//" + location.host + "/" + "{{{live_reload_endpoint}}}";
@@ -235,6 +237,7 @@
                 socket.close();
             }
         </script>
+        -->
         {{/if}}
 
         {{#if google_analytics}}

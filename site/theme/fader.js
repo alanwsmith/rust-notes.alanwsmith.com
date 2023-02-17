@@ -17,6 +17,7 @@ const faderSelectors = [
   '.ace_rparen',
   '.ace_name',
   '.ace_entity.ace_name.ace_function',
+  '.ace_line',
 ]
 
 const prepLineFades = () => {
@@ -29,6 +30,9 @@ const prepLineFades = () => {
         const fadeString = `#playground${faderSetIndex} .ace_line:nth-child(${lineNumber}) ${faderSelector} { color: #333; }`
         c.faderStyles.push(fadeString)
       })
+      c.faderStyles.push(
+        `#playground${faderSetIndex} .ace_line:nth-child(${lineNumber}) { color: #333; }`
+      )
 
       // const fadeElements = document.querySelectorAll(
       //   '#content > main > pre:nth-child(6) > pre > code > div.ace_scroller > div > div.ace_layer.ace_text-layer > div > span'

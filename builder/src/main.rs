@@ -102,6 +102,8 @@ fn build_output(page: &mut Page) {
     for example in page.examples.iter() {
         //dbg!(example);
 
+        page.output.push_str(r#"<div class="example">"#);
+        page.output.push_str("\n\n");
         page.output.push_str("### ");
 
         page.output.push_str(
@@ -115,7 +117,7 @@ fn build_output(page: &mut Page) {
                 .unwrap(),
         );
 
-        page.output.push_str("\n");
+        page.output.push_str("\n\n");
         page.output.push_str("```rust, editable\n");
 
         // Make a vec to hold the local source code lines
@@ -167,6 +169,8 @@ fn build_output(page: &mut Page) {
                 .unwrap(),
         );
 
+        page.output.push_str("\n\n");
+        page.output.push_str("</div>");
         page.output.push_str("\n\n");
     }
     page.output.push_str(r#" <script>const c = { sets: [ "#);

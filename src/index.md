@@ -11,67 +11,62 @@ a full set of source code then show how to
 put it together step-by-step. Here's an example
 with "Hello World"
 
+<div class="example">
+
 ### Full Source Code
+
 ```rust, editable
 fn main() {
   println!("Hello, World");
 }
 ```
 
-This is the full source code for
-`Hello, World`. You can run it or 
-mess with it here or in last example
-below. 
 
-Here's the step-by-step
-build process.
+
+</div>
+
+<div class="example">
 
 ### Add the `main` function
+
 ```rust, editable
 fn main() {
 
 }
 ```
 
-The samples on the site are full, runnable
-programs. They start with this `main` function
-which is where Rust kicks things off in 
-a program.
 
-### Stub out a print line expression
-```rust, editable
-fn main() {
-  println!();
-}
-```
 
-Printing a line to the terminal is done
-with `println!()` expressions. The `!` means
-`println` is a "macro". We need to cover a few
-more things before that makes much sense. For now, 
-just know that the `!` needs to be there and it's 
-super easy to miss.
+</div>
 
-### Fill in the text
+<div class="example">
+
+### Print to the terminal
+
 ```rust, editable
 fn main() {
   println!("Hello, World");
 }
 ```
 
-The area in quotes in a `println!()` 
-expression is called a "format string".
-We'll look at how to add variables 
-to is shortly.
+
+
+</div>
+
+<div class="example">
 
 ### Run it
+
 ```rust, editable
 fn main() {
   println!("Hello, World");
 }
 ```
 
-Here's another copy of the code you can play
-around with and run directly on the site.
+This is the full example again. 
+It's editable and you can run
+it directly on the site.
 
- <script>const c = { sets: [ { fadeWordSets: [],fadeLines: []},{ fadeWordSets: [],fadeLines: []},{ fadeWordSets: [],fadeLines: [1,3,]},{ fadeWordSets: [{line: 2,words: [1, ]},],fadeLines: [1,3,]},{ fadeWordSets: [],fadeLines: []},] }; </script>
+</div>
+
+ <script>const c = { sets: [ { fadeWordSets: [],fadeLines: []},{ fadeWordSets: [],fadeLines: []},{ fadeWordSets: [],fadeLines: [1,3,]},{ fadeWordSets: [],fadeLines: []},] }; </script>

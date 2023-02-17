@@ -1,5 +1,56 @@
+:root {
+  --example-background-color: #001;
+  --example-font-color: #ccc;
+  --example-border-color: #333;
+  --example-border-radius: 0.6rem;
+  --fader-font-color: #556;
+}
+
 .ace_paren,
 .ace_rparen,
 .ace_lparen {
   color: var(--fg);
+}
+
+/* pre.playground { */
+/*   outline: 1px solid green; */
+/* } */
+
+.ace_hidpi .ace_text-layer,
+.ace_hidpi .ace_gutter-layer,
+.ace_hidpi .ace_content,
+.ace_hidpi .ace_gutter {
+  /* outline: 1px solid blue; */
+  padding-top: 1rem;
+}
+
+.hljs.ace_editor {
+  /* outline: 1px solid purple; */
+  padding: 1rem;
+  border-radius: var(--example-border-radius);
+  background-color: #000;
+  border: 1px solid var(--example-border-color);
+}
+
+div.example {
+  padding-top: 1.4rem 0;
+  border: 1px solid var(--example-border-color);
+  background-color: var(--example-background-color);
+  color: var(--example-font-color);
+  border-radius: var(--example-border-radius);
+  margin-bottom: 3.9rem;
+}
+
+.example h3 {
+  color: var(--example-font-color);
+  margin-top: 1.2rem;
+  margin-left: 1.7rem;
+  margin-bottom: 0rem;
+  padding-bottom: 1rem;
+  font-size: 1.8rem;
+}
+
+.example pre {
+  padding: 0;
+  margin: 0;
 }

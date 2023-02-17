@@ -26,11 +26,11 @@ const prepLineFades = () => {
       const playgroundNumber = faderSet + 1
       const lineNumber = fadeLine
       faderSelectors.forEach((faderSelector) => {
-        const fadeString = `#playground${faderSetIndex} .ace_line:nth-child(${lineNumber}) ${faderSelector} { color: #333; }`
+        const fadeString = `#playground${faderSetIndex} .ace_line:nth-child(${lineNumber}) ${faderSelector} { color: var(--fader-font-color); }`
         c.faderStyles.push(fadeString)
       })
       c.faderStyles.push(
-        `#playground${faderSetIndex} .ace_line:nth-child(${lineNumber}) { color: #333; }`
+        `#playground${faderSetIndex} .ace_line:nth-child(${lineNumber}) { color: var(--fader-font-color); }`
       )
     })
   })
@@ -41,10 +41,10 @@ const prepWordFades = () => {
     faderSet.fadeWordSets.forEach((fadeWordSet) => {
       fadeWordSet.words.forEach((fadeWord) => {
         c.faderStyles.push(
-          `#playground${faderSetIndex} .ace_line:nth-child(${fadeWordSet.line}) span:nth-child(${fadeWord}) { color: #333; }`
+          `#playground${faderSetIndex} .ace_line:nth-child(${fadeWordSet.line}) span:nth-child(${fadeWord}) { color: var(--fader-font-color); }`
         )
         c.faderStyles.push(
-          `#playground${faderSetIndex} .ace_line:nth-child(${fadeWordSet.line}):not(span) { color: #333; }`
+          `#playground${faderSetIndex} .ace_line:nth-child(${fadeWordSet.line}):not(span) { color: var(--fader-font-color); }`
         )
         console.log(fadeWordSet.line)
         console.log(fadeWord)

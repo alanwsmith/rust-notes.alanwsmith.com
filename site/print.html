@@ -82,7 +82,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="todo.html"><strong aria-hidden="true">2.</strong> TODO</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -140,49 +140,45 @@ I do.</p>
 a full set of source code then show how to
 put it together step-by-step. Here's an example
 with &quot;Hello World&quot;</p>
+<div class="example">
 <h3 id="full-source-code"><a class="header" href="#full-source-code">Full Source Code</a></h3>
 <pre><pre class="playground"><code class="language-rust  editable">fn main() {
   println!(&quot;Hello, World&quot;);
 }</code></pre></pre>
-<p>This is the full source code for
-<code>Hello, World</code>. You can run it or 
-mess with it here or in last example
-below. </p>
-<p>Here's the step-by-step
-build process.</p>
+</div>
+<div class="example">
 <h3 id="add-the-main-function"><a class="header" href="#add-the-main-function">Add the <code>main</code> function</a></h3>
 <pre><pre class="playground"><code class="language-rust  editable">fn main() {
 
 }</code></pre></pre>
-<p>The samples on the site are full, runnable
-programs. They start with this <code>main</code> function
-which is where Rust kicks things off in 
-a program.</p>
-<h3 id="stub-out-a-print-line-expression"><a class="header" href="#stub-out-a-print-line-expression">Stub out a print line expression</a></h3>
-<pre><pre class="playground"><code class="language-rust  editable">fn main() {
-  println!();
-}</code></pre></pre>
-<p>Printing a line to the terminal is done
-with <code>println!()</code> expressions. The <code>!</code> means
-<code>println</code> is a &quot;macro&quot;. We need to cover a few
-more things before that makes much sense. For now, 
-just know that the <code>!</code> needs to be there and it's 
-super easy to miss.</p>
-<h3 id="fill-in-the-text"><a class="header" href="#fill-in-the-text">Fill in the text</a></h3>
+</div>
+<div class="example">
+<h3 id="print-to-the-terminal"><a class="header" href="#print-to-the-terminal">Print to the terminal</a></h3>
 <pre><pre class="playground"><code class="language-rust  editable">fn main() {
   println!(&quot;Hello, World&quot;);
 }</code></pre></pre>
-<p>The area in quotes in a <code>println!()</code> 
-expression is called a &quot;format string&quot;.
-We'll look at how to add variables 
-to is shortly.</p>
+</div>
+<div class="example">
 <h3 id="run-it"><a class="header" href="#run-it">Run it</a></h3>
 <pre><pre class="playground"><code class="language-rust  editable">fn main() {
   println!(&quot;Hello, World&quot;);
 }</code></pre></pre>
-<p>Here's another copy of the code you can play
-around with and run directly on the site.</p>
-<script>const c = { sets: [ { fadeWordSets: [],fadeLines: []},{ fadeWordSets: [],fadeLines: []},{ fadeWordSets: [],fadeLines: [1,3,]},{ fadeWordSets: [{line: 2,words: [1, ]},],fadeLines: [1,3,]},{ fadeWordSets: [],fadeLines: []},] }; </script>
+<p>This is the full example again. 
+It's editable and you can run
+it directly on the site.</p>
+</div>
+<script>const c = { sets: [ { fadeWordSets: [],fadeLines: []},{ fadeWordSets: [],fadeLines: []},{ fadeWordSets: [],fadeLines: [1,3,]},{ fadeWordSets: [],fadeLines: []},] }; </script><div style="break-before: page; page-break-before: always;"></div><h1 id="todo"><a class="header" href="#todo">TODO</a></h1>
+<ul>
+<li>Check highlight fades in the different themes</li>
+<li>Add styling around examples</li>
+<li>Turn off Run option for partial examples</li>
+<li>Make run button always visible</li>
+<li>Make run button say Run</li>
+<li>Turn off undo button (feels more noise then useful)</li>
+<li>Prevent top bar from floating back in and covering run buttons</li>
+<li>Add notes section after the examples</li>
+</ul>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

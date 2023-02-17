@@ -1,0 +1,14 @@
+/Users/alan/workshop/rust-notes.alanwsmith.com/builder/target/debug/deps/indexmap-156960912a33c892.rmeta: /Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/lib.rs /Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/arbitrary.rs /Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/macros.rs /Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/equivalent.rs /Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/mutable_keys.rs /Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/util.rs /Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/map.rs /Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/map/core.rs /Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/map/core/raw.rs /Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/set.rs
+
+/Users/alan/workshop/rust-notes.alanwsmith.com/builder/target/debug/deps/indexmap-156960912a33c892.d: /Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/lib.rs /Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/arbitrary.rs /Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/macros.rs /Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/equivalent.rs /Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/mutable_keys.rs /Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/util.rs /Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/map.rs /Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/map/core.rs /Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/map/core/raw.rs /Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/set.rs
+
+/Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/lib.rs:
+/Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/arbitrary.rs:
+/Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/macros.rs:
+/Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/equivalent.rs:
+/Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/mutable_keys.rs:
+/Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/util.rs:
+/Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/map.rs:
+/Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/map/core.rs:
+/Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/map/core/raw.rs:
+/Users/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.9.2/src/set.rs:

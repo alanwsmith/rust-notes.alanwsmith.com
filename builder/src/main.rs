@@ -1,5 +1,6 @@
 #![allow(warnings)]
 
+use anyhow::Result as AResult;
 use nom::bytes::complete::tag;
 use nom::bytes::complete::take_until;
 use nom::character::complete::multispace0;
@@ -13,22 +14,24 @@ use serde::{Deserialize, Serialize};
 use serde_json::json;
 use serde_json::Result;
 use serde_json::Value;
+use serde_yaml::Value as YAMLValue;
 use std::fs;
 
 #[derive(Debug, Serialize, Deserialize)]
 struct LineSet {
-    heading: String,
-    visible: Vec<i32>,
     active: Vec<i32>,
     fades: Vec<i32>,
+    heading: String,
+    note: String,
     overrides: Vec<i32>,
+    visible: Vec<i32>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 struct Example {
     raw_text: String,
-    raw_json: Option<String>,
-    line_set: Option<serde_json::Value>,
+    data: Option<YAMLValue>,
+    // line_set: Option<serde_json::Value>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -50,41 +53,67 @@ fn main() {
     };
 
     match get_title(&mut page) {
-        Ok(_) => println!("It worked"),
-        Err(_) => println!("It borked"),
+        Ok(_) => println!("Got: Title"),
+        Err(e) => println!("Error Getting Title: {}", e),
     }
 
     match get_content(&mut page) {
-        Ok(_) => println!("It worked"),
-        Err(_) => println!("It borked"),
+        Ok(_) => println!("Got: Content"),
+        Err(e) => println!("Error Getting Content: {}", e),
     }
 
     match get_source(&mut page) {
-        Ok(_) => println!("It worked"),
-        Err(_) => println!("It borked"),
+        Ok(_) => println!("Got: Source"),
+        Err(e) => println!("Error Getting Source: {}", e),
     }
 
-    dbg!(page);
+    match get_examples(&mut page) {
+        Ok((a, b)) => println!("Got: Examples"),
+        Err(e) => println!("Error Getting Examples: {}", e),
+    }
 
-    // match get_examples(&mut page) {
-    //     Ok(_) => println!("It worked"),
-    //     Err(_) => println!("It borked"),
-    // }
+    match get_yaml(&mut page) {
+        Ok(()) => println!("Got: YAML"),
+        Err(e) => println!("Error Getting YAML: {}", e),
+    }
 
-    // match get_raw_jsons(&mut page) {
-    //     Ok(_) => println!("It worked"),
-    //     Err(_) => println!("It borked"),
-    // }
-
-    // get_line_set(&mut page);
-
-    // match get_line_set(&mut page) {
-    //     Ok(_) => println!("It worked"),
-    //     Err(e) => println!("{:?}", e),
-    // }
+    dbg!(&page.examples[0]);
 
     // dbg!(page);
+
+    //
 }
+
+fn get_yaml(page: &mut Page) -> AResult<()> {
+    for example in page.examples.iter_mut() {
+        // dbg!(&example.raw_text);
+        //let v: Value = serde_yaml::from_str(&example.raw_text)?;
+        example.data = serde_yaml::from_str(&example.raw_text)?;
+    }
+    Ok(())
+}
+
+fn get_examples(page: &mut Page) -> IResult<&str, &str> {
+    let (input, _) = take_until("---> EXAMPLE")(page.raw_text.as_str())?;
+    let (input, _) = tag("---> EXAMPLE")(input)?;
+    let (input, mut lines) =
+        separated_list1(tag("---> EXAMPLE"), take_until("---> EXAMPLE"))(input)?;
+    let (_, tmp_line) = rest(input)?;
+    let (_, mut line) = preceded(tag("---> EXAMPLE"), rest)(input)?;
+    lines.push(line);
+    for line in lines.iter() {
+        let mut example = Example {
+            raw_text: line.trim().to_string(),
+            data: None,
+        };
+        page.examples.push(example);
+    }
+    Ok(("", ""))
+}
+
+// fn get_examples(page: &Page) -> Result<()> {
+//     Ok(())
+// }
 
 // fn get_raw_jsons(page: &mut Page) -> IResult<&str, &str> {
 //     for example in page.examples.iter_mut() {
@@ -97,104 +126,75 @@ fn main() {
 //     Ok(("", ""))
 // }
 
-fn get_line_set(page: &mut Page) -> Result<&str> {
-    for example in page.examples.iter_mut() {
-        // This works
-        example.line_set = serde_json::from_str("{\"a\":\"b\"}").unwrap();
-        //dbg!(&example.line_set.as_ref().unwrap());
-
-        //
-        example.line_set = serde_json::from_str("{\"a\":\"b\"}").unwrap();
-        //dbg!(&example.line_set.as_ref().unwrap());
-
-        // dbg!(&example.raw_json.as_ref().unwrap());
-        //
-        // //////////////////////////////////////////////
-        // Things that don't work
-        // serde_json::from_str(&example.raw_json.as_ref().unwrap())?;
-        // serde_json::from_str(&example.raw_json.unwrap_or("{}".to_string()));
-
-        ////////////////////////////////////////
-        // This doesn't work. It loads the data, but it's a String
-        // dbg!(json!(&example.raw_json.as_ref().unwrap()));
-        // example.line_set = Some((json!(&example.raw_json.as_ref().unwrap())));
-        // dbg!(&example.line_set.as_ref()["heading"]);
-
-        ///////////////////////////////////////////////////
-        //// This fails
-        //dbg!(&example.raw_json);
-        //let v: Value = serde_json::from_str(&example.raw_json.as_ref().unwrap().as_str())?;
-        //dbg!(v);
-
-        ///////////////////////////////////////////////////
-        //// This works now that the data is cleaned up
-        //// dbg!(&example.raw_json);
-        //let v: Value = serde_json::from_str(&example.raw_json.as_ref().unwrap().as_str()).unwrap();
-        //dbg!(v);
-
-        /////////////////////////////////////////////////////
-        //// This works with less whatever
-        //let v: Value = serde_json::from_str(&example.raw_json.as_ref().unwrap())?;
-        //dbg!(v);
-
-        ///////////////////////////////////////////////////
-        // This works with less whatever
-        example.line_set = serde_json::from_str(&example.raw_json.as_ref().unwrap())?;
-        dbg!(&example.line_set.as_ref().unwrap()["heading"]
-            .as_str()
-            .unwrap());
-
-        println!(
-            "{}",
-            &example.line_set.as_ref().unwrap()["heading"]
-                .as_str()
-                .unwrap()
-        );
-
-        ///////////////////////////////////////////////
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        // dbg!(serde_json::from_str(&example.raw_json.as_ref().unwrap())?);
-
-        // example.line_set = Some(serde_json::from_str(example.raw_json.unwrap())?).ok_or("asdf")?;
-        // let v: Value = example.raw_json.unwrap().into();
-        // dbg!(example.raw_json.as_ref().unwrap());
-        // dbg!(serde_json::from_str(&example.raw_json.unwrap().as_str()));
-        //dbg!(serde_json::from_str(
-        //   example.raw_json.as_ref().unwrap().as_str()
-        // )?);
-        //example.line_set = Some(serde_json::from_str(example.raw_json.as_ref().unwrap())?);
-        // dbg!(serde_json::from_str(Some(&example.raw_json).unwrap()));
-        // dbg!(serde_json::from_str(example.raw_json).unwrap().to_str());
-        // example.line_set = serde_json::from_str(example.raw_json))?;
-    }
-    // dbg!(page);
-    Ok("")
-}
-
-// fn get_examples(page: &mut Page) -> IResult<&str, &str> {
-//     let (input, _) = take_until("---> EXAMPLE")(page.raw_text.as_str())?;
-//     let (input, _) = tag("---> EXAMPLE")(input)?;
-//     let (input, mut lines) =
-//         separated_list1(tag("---> EXAMPLE"), take_until("---> EXAMPLE"))(input)?;
-//     let (_, tmp_line) = rest(input)?;
-//     let (_, mut line) = preceded(tag("---> EXAMPLE"), rest)(input)?;
-//     lines.push(line);
-//     for line in lines.iter() {
-//         let mut example = Example {
-//             raw_text: line.trim().to_string(),
-//             raw_json: None,
-//             line_set: None,
-//         };
-//         page.examples.push(example);
-//     }
-//     Ok(("", ""))
-// }
+//fn get_line_set(page: &mut Page) -> Result<&str> {
+//    for example in page.examples.iter_mut() {
+//        // This works
+//        example.line_set = serde_json::from_str("{\"a\":\"b\"}").unwrap();
+//        //dbg!(&example.line_set.as_ref().unwrap());
+//        //
+//        example.line_set = serde_json::from_str("{\"a\":\"b\"}").unwrap();
+//        //dbg!(&example.line_set.as_ref().unwrap());
+//        // dbg!(&example.raw_json.as_ref().unwrap());
+//        //
+//        // //////////////////////////////////////////////
+//        // Things that don't work
+//        // serde_json::from_str(&example.raw_json.as_ref().unwrap())?;
+//        // serde_json::from_str(&example.raw_json.unwrap_or("{}".to_string()));
+//        ////////////////////////////////////////
+//        // This doesn't work. It loads the data, but it's a String
+//        // dbg!(json!(&example.raw_json.as_ref().unwrap()));
+//        // example.line_set = Some((json!(&example.raw_json.as_ref().unwrap())));
+//        // dbg!(&example.line_set.as_ref()["heading"]);
+//        ///////////////////////////////////////////////////
+//        //// This fails
+//        //dbg!(&example.raw_json);
+//        //let v: Value = serde_json::from_str(&example.raw_json.as_ref().unwrap().as_str())?;
+//        //dbg!(v);
+//        ///////////////////////////////////////////////////
+//        //// This works now that the data is cleaned up
+//        //// dbg!(&example.raw_json);
+//        //let v: Value = serde_json::from_str(&example.raw_json.as_ref().unwrap().as_str()).unwrap();
+//        //dbg!(v);
+//        /////////////////////////////////////////////////////
+//        //// This works with less whatever
+//        //let v: Value = serde_json::from_str(&example.raw_json.as_ref().unwrap())?;
+//        //dbg!(v);
+//        ///////////////////////////////////////////////////
+//        // This works with less whatever
+//        example.line_set = serde_json::from_str(&example.raw_json.as_ref().unwrap())?;
+//        dbg!(&example.line_set.as_ref().unwrap()["heading"]
+//            .as_str()
+//            .unwrap());
+//        println!(
+//            "{}",
+//            &example.line_set.as_ref().unwrap()["heading"]
+//                .as_str()
+//                .unwrap()
+//        );
+//        ///////////////////////////////////////////////
+//        //
+//        //
+//        //
+//        //
+//        //
+//        //
+//        //
+//        // dbg!(serde_json::from_str(&example.raw_json.as_ref().unwrap())?);
+//        // example.line_set = Some(serde_json::from_str(example.raw_json.unwrap())?).ok_or("asdf")?;
+//        // let v: Value = example.raw_json.unwrap().into();
+//        // dbg!(example.raw_json.as_ref().unwrap());
+//        // dbg!(serde_json::from_str(&example.raw_json.unwrap().as_str()));
+//        //dbg!(serde_json::from_str(
+//        //   example.raw_json.as_ref().unwrap().as_str()
+//        // )?);
+//        //example.line_set = Some(serde_json::from_str(example.raw_json.as_ref().unwrap())?);
+//        // dbg!(serde_json::from_str(Some(&example.raw_json).unwrap()));
+//        // dbg!(serde_json::from_str(example.raw_json).unwrap().to_str());
+//        // example.line_set = serde_json::from_str(example.raw_json))?;
+//    }
+//    // dbg!(page);
+//    Ok("")
+//}
 
 fn get_content(page: &mut Page) -> IResult<&str, &str> {
     let (input, _) = take_until("---> CONTENT")(page.raw_text.as_str())?;

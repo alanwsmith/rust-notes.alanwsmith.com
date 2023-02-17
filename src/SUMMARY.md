@@ -1,4 +1,4 @@
-# Rust Notes 
+# Rust Notes
 
-- [Introduction](./introduction/index.md)
-
+- [Introduction](./index.md)
+- [TODO](./todo.md)

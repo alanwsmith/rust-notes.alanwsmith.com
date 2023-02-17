@@ -39,4 +39,4 @@ Each program starts with a `main` function
 which is where Rust first looks when it starts
 things up.
 
- <script>const c = { sets: [ { fades: [{line: 2,start: 1,end: 7},],active: [1,2,3,]},{ fades: [],active: [1,3,]},] }; </script>
+ <script>const c = { sets: [ { fadeCharacters: [{line: 3,start: 1,end: 7},],fadeLines: [1,3,]},{ fadeCharacters: [],fadeLines: []},] }; </script>

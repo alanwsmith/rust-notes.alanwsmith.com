@@ -159,13 +159,13 @@ fn build_output(page: &mut Page) {
     page.output.push_str(r#" <script>const c = { sets: [ "#);
 
     for example in page.examples.iter() {
-        page.output.push_str("{ fades: [");
+        page.output.push_str("{ fadeCharacters: [");
 
         for fades in example
             .data
             .as_ref()
             .unwrap()
-            .get("fades")
+            .get("fadeCharacters")
             .unwrap()
             .as_sequence()
             .unwrap()
@@ -189,12 +189,12 @@ fn build_output(page: &mut Page) {
 
         // Do "active"
 
-        page.output.push_str("active: [");
+        page.output.push_str("fadeLines: [");
         for active_number in example
             .data
             .as_ref()
             .unwrap()
-            .get("active")
+            .get("fadeLines")
             .unwrap()
             .as_sequence()
             .unwrap()
